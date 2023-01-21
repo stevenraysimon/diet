@@ -1,0 +1,387 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Raw Diet Timer</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Raw Diet Countdown">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Steven Simon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+
+            body{
+                background: #fff;
+                color: #333;
+            }
+
+            .wrapper{
+                margin: auto;
+                width: 100%;
+                max-width: 1200px;
+                text-align: center;
+                font-family:'Courier New', Courier, monospace;
+                /* font-style: italic; */
+                font-size: 1.2em;
+                padding: 20px;
+                box-sizing: border-box;
+                height: 100%;
+                display: block;
+            }
+
+            @media screen and (max-width: 700px) {
+                .wrapper{
+                    height: auto;
+                }
+
+                iframe{
+                    margin-right: 0px !important;
+                    padding: 0px 10px !important;
+                    max-width: none !important;
+                }
+
+                h1, h3{
+                    font-size: 96%;
+                }
+            }
+            
+            h1, h3{
+                margin-bottom: 15px;
+            }
+
+            #myProgress {
+                width: 100%;
+                background-color: #ddd;
+                margin-bottom: 15px;
+                /* border-radius: 40px; */
+            }
+
+            #myBar {
+                width: 1%;
+                height: 30px;
+                background-color: #2F67F5;
+            }
+
+            ul{
+                text-align: left;
+                max-width: 450px;
+                margin:0  auto;
+            }
+
+            li li{
+                font-size: 80%;
+                margin-left: 30px;
+            }
+
+            img{
+                max-width: 300px;
+                width: 100%;
+                margin: 0 auto;
+                display: block;
+            }
+
+            #iframe{
+                position: fixed;
+                bottom: 10px;
+                right: -500px;
+                max-width: 450px;
+                width: 100%;
+                display: none;
+                padding: 0px;
+                box-sizing: border-box;
+                margin-right: 10px;
+                border-radius:12px;
+                transition: 0.4s;
+            }
+
+            #media-links{
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+
+            .flex{
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            #music{
+                width: 50px;
+                height: 50px;
+                background-color: #ddd;
+                border-radius: 40px;
+                cursor: pointer;
+                text-align: center;
+                font-size: 2em;
+            }
+
+            #music:hover{
+                background-color: #aaa;
+                transition: 0.4s;
+            }
+
+            #music:active{
+                background-color: #888;
+                transition: 0s;
+            }
+
+            #spotify{
+                position: relative;
+                background-color: #1ed760;
+                color: black;
+                border-radius: 500px;
+                font-size: inherit;
+                padding: 14px 32px;
+                border: none;
+                margin-right: 10px;
+                cursor: pointer;
+                display: none;
+            }
+
+            a button{
+                text-decoration: none !important;
+            }
+
+            #spotify:hover{
+                background-color: #169b45;
+                transition: 0.4s;
+            }
+
+            #spotify:active{
+                background-color: #117e37;
+                transition: 0s;
+            }
+
+            #youtube{
+                position: relative;
+                background-color: #333;
+                color: white;
+                border-radius: 500px;
+                font-size: inherit;
+                padding: 14px 32px;
+                border: none;
+                cursor: pointer;
+                display: none;
+            }
+
+            #youtube:hover, #youtube:active{
+                background-color: #222;
+                transition: 0.4s;
+            }
+
+            #youtube:active{
+                background-color: black;
+                transition: 0s;
+            }
+
+            a{
+                color: #2F67F5;
+                text-decoration: none;
+            }
+
+            a:hover{
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <img src="carrots.jpg" />
+            <div id="myProgress">
+                <div id="myBar"></div>
+            </div>
+            <h1 id="countdown"><span id="days">00</span> days <span id="hours">00</span> hours <span id="minutes">00</span> minutes <span id="seconds">00</span> seconds to go</h1>
+            <h3 id="total">You have gone a total of <span id="goneDays">104</span> days <span id="goneHours">99</span> hours <span id="goneMinutes">99</span> minutes <span id="goneSeconds">99</span> seconds</h3>
+            <h3>You are on day <span id="currentDay">00</span> of <span id="totalDays">00</span></h3>
+            <h5>You started on <span id="startDate">January 16, 2023</span> and will end on <span id="endDate">May 1, 2023</span></h5>
+            <br>
+            <h3>Raw Diet Challenge:</h3>
+            <ul>
+                <li>Lemon Water - 16oz</li>
+                <li>Celery Juice - 16-32oz</li>
+                <li><a title="Heavy Metal Detox Smoothie" href="https://www.medicalmedium.com/mm101/medical-medium-heavy-metal-detox.htm">Heavy Metal Detox Smoothie - 32-48oz</a>
+                        <ul>
+                            <li><a title="wild blueberries" href="https://www.wymans.com/products/wild-blueberries">wild blueberries</a></li>
+                            <li>orange squeezed</li>
+                            <li>bananas</li>
+                            <li>cilantro</li>
+                            <li><a title="barley grass juice powder" href="https://www.amazon.com/Numami-Organic-Barley-Soluble-Smoothie/dp/B08N196CMH/ref=sr_1_7?m=A13A1Y3VTMSFEO&qid=1674207239&s=merchant-items&sr=1-7&th=1">barley grass juice powder</a></li>
+                            <li><a title="spirulina" href="https://www.amazon.com/Micro-Ingredients-Antioxidant-Non-Irradiated-Non-Contaminated/dp/B01DPW5FWW/ref=pd_bxgy_vft_none_img_sccl_2/137-0067831-6312616?pd_rd_w=V82Jc&content-id=amzn1.sym.7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_p=7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_r=BDBT6T6Y0SMFA91QWP87&pd_rd_wg=9kYNL&pd_rd_r=058cd4bf-6bfb-45e4-8159-dc25920cc6d6&pd_rd_i=B01DPW5FWW&psc=1">spirulina</a></li>
+                            <li>dulse</li>
+                        </ul>
+                </li>
+                <li>Apple(s)</li>
+                <li><a title="Zinc" href="https://vimergy.com/products/zinc">Zinc</a> Supplement</li>
+                <li>Banana(s)</li>
+                <li><a title="B12" href="https://vimergy.com/products/organic-b12">B12</a> Supplement</li>
+                <li>Orange Drink - 32-40oz
+                    <ul>
+                        <li>carrot juice</li>
+                        <li>orange squeezed</li>
+                    </ul>
+                </li>
+                <li><a title="Propolis" href="https://vimergy.com/products/propolispure">Propolis</a> Supplement</li>
+                <li>Salad w/ orange squeezed</li>
+                <li>Guacamole (some days)
+                    <ul>
+                        <li>avacado</li>
+                        <li>roma tomato</li>
+                        <li>red onion</li>
+                        <li>cilantro</li>
+                        <li>garlic</li>
+                        <li>lime</li>
+                    </ul>
+                </li>
+                <li><a title="Cat's Claw" href="https://vimergy.com/products/organic-cats-claw">Cat's Claw</a> Supplement</li>
+                <li>Grapes or Strawberries</li>
+            </ul>
+        </div>
+        <div id="media-links">
+            <div id="music">&#9834</div>
+            <div class="flex">
+                <a href="https://accounts.spotify.com/en/login" title="Log into Spotify" target="_blank"><button id="spotify">Log into Spotify for full song</button></a>
+                <button id="youtube">Try YouTube</button>
+            </div>
+        </div>
+        <iframe id="iframe" src="https://spotify.com" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </body>
+    <script>
+        // Set the date we're counting down to
+        var endDate = new Date("May 1, 2023 00:00:00").getTime();
+        var startDate = new Date("January 16, 2023 00:00:00").getTime();
+
+        var days, hours, minutes, seconds;
+        var daysDone, hoursDone, minutesDone, secondsDone;
+        var totalDays;
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = endDate - now;
+
+            var done = now - startDate;
+
+            var total = endDate - startDate;
+
+            // Time calculations for days, hours, minutes and seconds
+            days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Time calculations for days, hours, minutes and seconds
+            daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
+            hoursDone = Math.floor((done % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            minutesDone = Math.floor((done % (1000 * 60 * 60)) / (1000 * 60));
+            secondsDone = Math.floor((done % (1000 * 60)) / 1000);
+
+            totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
+
+            // Display the result in the element with id="demo"
+            document.getElementById("countdown").innerHTML = days + " days " + hours + " hours "
+            + minutes + " minutes " + seconds + " seconds to go ";
+
+            document.getElementById("total").innerHTML = "You have gone a total of " + daysDone + " days " + hoursDone + " hours "
+            + minutesDone + " minutes " + secondsDone + " seconds";
+
+            document.getElementById("currentDay").innerHTML = daysDone + 1;
+            document.getElementById("totalDays").innerHTML = totalDays;
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+
+        }, 1000);
+
+        var i = 0;
+        function move() {
+            if (i == 0) {
+                i = 1;
+                var elem = document.getElementById("myBar");
+                var timeDone = new Date().getTime() - startDate;
+                var timeDoneCalc = Math.floor(timeDone / (1000 * 60 * 60 * 24));
+                var width = timeDoneCalc;
+                var total = endDate - startDate;
+                totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
+                elem.innerHTML = ((width*100)/totalDays).toFixed(2)  + "%";
+                var timePlus = 1;
+                //var id = setInterval(frame, 1000);
+                function frame(){
+                    if (width >= totalDays) {
+                        clearInterval(id);
+                        i = 0;
+                    } else {
+                        width+=timePlus;
+                        elem.style.width = width + "%";
+                        elem.innerHTML = width  + "%";
+                    }
+                }
+            }
+        }
+
+       move();
+
+       //Songs
+       var songs = ['https://open.spotify.com/embed/track/5Gl1gvZJujOHi2Jw2wcDdX?utm_source=generator', 'https://open.spotify.com/embed/track/3TirfpSyUYfXE9osoQmhxV?utm_source=generator', 'https://open.spotify.com/embed/track/2goLsvvODILDzeeiT4dAoR?utm_source=generator', 'https://open.spotify.com/embed/track/7sI80PK0P3tDCvULKszqzL?utm_source=generator', 'https://open.spotify.com/embed/track/4wajJ1o7jWIg62YqpkHC7S?utm_source=generator', 'https://open.spotify.com/embed/track/4x8g2OO1JhtmZz6psVAEOH?utm_source=generator', 'https://open.spotify.com/embed/track/2EuIkhXkq3Eo8MioInRm7e?utm_source=generator', 'https://open.spotify.com/embed/track/3kFkvYHAMnE8yMPD2fKzZb?utm_source=generator', 'https://open.spotify.com/embed/track/64qZB8xZ3u2EmH8zSqc7mU?utm_source=generator', 'https://open.spotify.com/embed/track/3yNH4HdWyljKSeLLhktrBd?utm_source=generator', 'https://open.spotify.com/embed/track/7a4AhwfxpHTVW939FsxXZb?utm_source=generator', 'https://open.spotify.com/embed/track/5N7ln3zfkVPd7c8I1Dws3c?utm_source=generator', 'https://open.spotify.com/embed/track/2WZyfujzMweFLnozyUJBkW?utm_source=generator', 'https://open.spotify.com/embed/track/5hkdfA87RZvNaxl6XiveOA?utm_source=generator', 'https://open.spotify.com/embed/track/6f5ExP43esnvdKPddwKXJH?utm_source=generator', 'https://open.spotify.com/embed/track/31dHe2I4tzOKT0ypVpVsuu?utm_source=generator', 'https://open.spotify.com/embed/track/6Up545NUflOiXo8cEraH49?utm_source=generator', 'https://open.spotify.com/embed/track/2LD2gT7gwAurzdQDQtILds?utm_source=generator', 'https://open.spotify.com/embed/track/1wH3PxeMNXKVkuG67czNOQ?utm_source=generator', 'https://open.spotify.com/embed/track/5ovcVaOus1Wv4vTtyGXlhB?utm_source=generator', 'https://open.spotify.com/embed/track/11utMtW3EPeTe1UoUWLfFM?utm_source=generator', 'https://open.spotify.com/embed/track/1DUR7k78QHSWvuCLpU2y4b?utm_source=generator', 'https://open.spotify.com/embed/track/6CU0zWIWVTEnmWpSjVHM93?utm_source=generator', 'https://open.spotify.com/embed/track/423o3ZHIaBtGXyhF1uH41a?utm_source=generator', 'https://open.spotify.com/embed/track/3RgR3cFZ6xh7MlB9DURK6e?utm_source=generator', 'https://open.spotify.com/embed/track/4N6HYihypXOVL24bnaR4fp?utm_source=generator', 'https://open.spotify.com/embed/track/37oLDb3119IdKSIFQmSGRj?utm_source=generator', 'https://open.spotify.com/embed/track/1LiwqqaafXkNQuWGW3HeId?utm_source=generator', 'https://open.spotify.com/embed/track/74k56xjvucElX9S5lY2O6t?utm_source=generator', 'https://open.spotify.com/embed/track/3oqi3tCQ1n2aZUBatDuy3Q?utm_source=generator'];
+
+       var videos = ['https://www.youtube.com/embed/LQ9tq9b0Bd4', 'https://www.youtube.com/embed/TNRCvG9YtYI', 'https://www.youtube.com/embed/daGcpvxPbCo', 'https://www.youtube.com/embed/hxuCLopcEy4'];
+
+       //Music
+       var music = document.getElementById("music");
+       var mediaLinks = document.getElementById("media-links");
+       var frame = document.getElementById("iframe");
+       var spotify = document.getElementById("spotify");
+       var youtube = document.getElementById("youtube");
+       var toggle = 0;
+       music.addEventListener("click", showSong);
+       youtube.addEventListener("click", switchSong);
+       frame.src = songs[Math.floor(Math.random() * songs.length)];
+       var videoOn = false;
+
+        function showSong(){
+            if (toggle == 0){
+                mediaLinks.style.bottom = "180px";
+                frame.style.display = "block";
+                if (videoOn == false){
+                    spotify.style.display = "block";
+                    youtube.style.display = "block";
+                } else{
+                    spotify.style.display = "none";
+                    youtube.style.display = "none";
+                }
+                frame.style.right = "0";
+                music.style.marginBottom = "10px";
+                toggle = 1;
+            } else {
+                mediaLinks.style.bottom = "10px";
+                frame.style.right = "-500px";
+                frame.style.display = "none";
+                spotify.style.display = "none";
+                youtube.style.display = "none";
+                music.style.marginBottom = "0px";
+                toggle = 0;
+            }
+        }
+
+        function switchSong(){
+            frame.src = videos[Math.floor(Math.random() * videos.length)];
+            spotify.style.display = "none";
+            youtube.style.display = "none";
+            videoOn = true;
+        }
+
+    </script>
+</html>
