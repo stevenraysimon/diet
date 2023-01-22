@@ -47,6 +47,10 @@
                 h1, h3{
                     font-size: 96%;
                 }
+
+                #spotify, #youtube{
+                    font-size: 80% !important;
+                }
             }
             
             h1, h3{
@@ -253,6 +257,7 @@
                             <li><a title="barley grass juice powder" href="https://www.amazon.com/Numami-Organic-Barley-Soluble-Smoothie/dp/B08N196CMH/ref=sr_1_7?m=A13A1Y3VTMSFEO&qid=1674207239&s=merchant-items&sr=1-7&th=1">barley grass juice powder</a></li>
                             <li><a title="spirulina" href="https://www.amazon.com/Micro-Ingredients-Antioxidant-Non-Irradiated-Non-Contaminated/dp/B01DPW5FWW/ref=pd_bxgy_vft_none_img_sccl_2/137-0067831-6312616?pd_rd_w=V82Jc&content-id=amzn1.sym.7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_p=7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_r=BDBT6T6Y0SMFA91QWP87&pd_rd_wg=9kYNL&pd_rd_r=058cd4bf-6bfb-45e4-8159-dc25920cc6d6&pd_rd_i=B01DPW5FWW&psc=1">spirulina</a></li>
                             <li>dulse</li>
+                            <li>water</li>
                         </ul>
                 </li>
                 <li>Apple(s)</li>
@@ -266,19 +271,32 @@
                     </ul>
                 </li>
                 <li><a title="Propolis" href="https://vimergy.com/products/propolispure">Propolis</a> Supplement</li>
-                <li>Salad w/ orange squeezed</li>
-                <li>Guacamole (some days)
+                <li>Salad
                     <ul>
-                        <li>avacado</li>
-                        <li>roma tomato</li>
-                        <li>red onion</li>
-                        <li>cilantro</li>
-                        <li>garlic</li>
-                        <li>lime</li>
+                        <li><a title="kale salad" href="https://www.medicalmedium.com/blog/chopped-kale-salad">kale salad</a>
+                            <ul>
+                                <li>kale</li>
+                                <li>green onions</li>
+                                <li>cucumber</li>
+                                <li>celery</li>
+                                <li>tomatoes</li>
+                                <li>asparagus</li>
+                                <li>oranges</li>
+                                <li>garlic</li>
+                                <li>serrano pepper</li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li><a title="Cat's Claw" href="https://vimergy.com/products/organic-cats-claw">Cat's Claw</a> Supplement</li>
-                <li>Grapes or Strawberries</li>
+                <li><a title="Liver Rescue Smoothie" href="https://www.medicalmedium.com/blog/liver-rescue-smoothie">Liver Rescue Smoothie</a>
+                    <ul>
+                        <li>bananas</li>
+                        <li>dragon fruit</li>
+                        <li><a title="wild blueberries" href="https://www.wymans.com/products/wild-blueberries">wild blueberries</a></li>
+                        <li>water</li>
+                    </ul>
+                </li>
             </ul>
             <footer>
                 <p>Developed by Steven Simon</p>
@@ -351,16 +369,15 @@
         }, 1000);
 
         var i = 0;
-        function move() {
+        function progress() {
             if (i == 0) {
                 i = 1;
-                var elem = document.getElementById("myBar");
+                var progressBar = document.getElementById("myBar");
                 var timeDone = new Date().getTime() - startDate;
-                var timeDoneCalc = Math.floor(timeDone / (1000 * 60 * 60 * 24));
-                var width = timeDoneCalc;
+                var width = Math.floor(timeDone / (1000 * 60 * 60 * 24));
                 var total = endDate - startDate;
                 totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
-                elem.innerHTML = ((width*100)/totalDays).toFixed(2)  + "%";
+                progressBar.innerHTML = ((width*100)/totalDays).toFixed(2)  + "%";
                 var timePlus = 1;
                 //var id = setInterval(frame, 1000);
                 function frame(){
@@ -369,14 +386,15 @@
                         i = 0;
                     } else {
                         width+=timePlus;
-                        elem.style.width = width + "%";
-                        elem.innerHTML = width  + "%";
+                        progressBar.style.width = width + "%";
+                        progressBar.innerHTML = width  + "%";
                     }
                 }
             }
         }
 
-       move();
+       //Progress Bar
+       progress();
 
        //Songs
        var songs = ['https://open.spotify.com/embed/track/5Gl1gvZJujOHi2Jw2wcDdX?utm_source=generator', 'https://open.spotify.com/embed/track/3TirfpSyUYfXE9osoQmhxV?utm_source=generator', 'https://open.spotify.com/embed/track/2goLsvvODILDzeeiT4dAoR?utm_source=generator', 'https://open.spotify.com/embed/track/7sI80PK0P3tDCvULKszqzL?utm_source=generator', 'https://open.spotify.com/embed/track/4wajJ1o7jWIg62YqpkHC7S?utm_source=generator', 'https://open.spotify.com/embed/track/4x8g2OO1JhtmZz6psVAEOH?utm_source=generator', 'https://open.spotify.com/embed/track/2EuIkhXkq3Eo8MioInRm7e?utm_source=generator', 'https://open.spotify.com/embed/track/3kFkvYHAMnE8yMPD2fKzZb?utm_source=generator', 'https://open.spotify.com/embed/track/64qZB8xZ3u2EmH8zSqc7mU?utm_source=generator', 'https://open.spotify.com/embed/track/3yNH4HdWyljKSeLLhktrBd?utm_source=generator', 'https://open.spotify.com/embed/track/7a4AhwfxpHTVW939FsxXZb?utm_source=generator', 'https://open.spotify.com/embed/track/5N7ln3zfkVPd7c8I1Dws3c?utm_source=generator', 'https://open.spotify.com/embed/track/2WZyfujzMweFLnozyUJBkW?utm_source=generator', 'https://open.spotify.com/embed/track/5hkdfA87RZvNaxl6XiveOA?utm_source=generator', 'https://open.spotify.com/embed/track/6f5ExP43esnvdKPddwKXJH?utm_source=generator', 'https://open.spotify.com/embed/track/31dHe2I4tzOKT0ypVpVsuu?utm_source=generator', 'https://open.spotify.com/embed/track/6Up545NUflOiXo8cEraH49?utm_source=generator', 'https://open.spotify.com/embed/track/2LD2gT7gwAurzdQDQtILds?utm_source=generator', 'https://open.spotify.com/embed/track/1wH3PxeMNXKVkuG67czNOQ?utm_source=generator', 'https://open.spotify.com/embed/track/5ovcVaOus1Wv4vTtyGXlhB?utm_source=generator', 'https://open.spotify.com/embed/track/11utMtW3EPeTe1UoUWLfFM?utm_source=generator', 'https://open.spotify.com/embed/track/1DUR7k78QHSWvuCLpU2y4b?utm_source=generator', 'https://open.spotify.com/embed/track/6CU0zWIWVTEnmWpSjVHM93?utm_source=generator', 'https://open.spotify.com/embed/track/423o3ZHIaBtGXyhF1uH41a?utm_source=generator', 'https://open.spotify.com/embed/track/3RgR3cFZ6xh7MlB9DURK6e?utm_source=generator', 'https://open.spotify.com/embed/track/4N6HYihypXOVL24bnaR4fp?utm_source=generator', 'https://open.spotify.com/embed/track/37oLDb3119IdKSIFQmSGRj?utm_source=generator', 'https://open.spotify.com/embed/track/1LiwqqaafXkNQuWGW3HeId?utm_source=generator', 'https://open.spotify.com/embed/track/74k56xjvucElX9S5lY2O6t?utm_source=generator', 'https://open.spotify.com/embed/track/3oqi3tCQ1n2aZUBatDuy3Q?utm_source=generator', 'https://open.spotify.com/embed/track/7jZ4UZAmg006Qx3rVuF7JI?utm_source=generator', 'https://open.spotify.com/embed/track/6zgCycfVETCfk2TNY7Othq?utm_source=generator', 'https://open.spotify.com/embed/track/2bzBI23EJWHjXmGj3xlYaM?utm_source=generator'];
