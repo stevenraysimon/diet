@@ -401,6 +401,9 @@
 
        var videos = ['https://www.youtube.com/embed/pGgNBTYzY8E', 'https://www.youtube.com/embed/salUViy2uoA', 'https://www.youtube.com/embed/n7wvAEDOxAs', 'https://www.youtube.com/embed/LQ9tq9b0Bd4', 'https://www.youtube.com/embed/TNRCvG9YtYI', 'https://www.youtube.com/embed/Qt87bLX7m_o', 'https://www.youtube.com/embed/wP0-SEmcHWI', 'https://www.youtube.com/embed/GzhZFVRecJo', 'https://www.youtube.com/embed/rDhZJYgTgKk', 'https://www.youtube.com/embed/ck2c3rOGCeI', 'https://www.youtube.com/embed/Z5ZkohRiwK8', 'https://www.youtube.com/embed/vsM_NzNyxlU', 'https://www.youtube.com/embed/INuS80qe_qU', 'https://www.youtube.com/embed/0tZ4SFhqbN8', 'https://www.youtube.com/embed/uYCX19nFmZ0', 'https://www.youtube.com/embed/nIvgTGYZTpE', 'https://www.youtube.com/embed/sIaT8Jl2zpI', 'https://www.youtube.com/embed/OgcY6qlzdf8', 'https://www.youtube.com/embed/odGRbYBU1u8', 'https://www.youtube.com/embed/Ox2g83kGE-U', 'https://www.youtube.com/embed/uP3RjvofwAs', 'https://www.youtube.com/embed/TnzdYbs6Fbc', 'https://www.youtube.com/embed/tLonNru58X4', 'https://www.youtube.com/embed/nUW6G5QdyYU', 'https://www.youtube.com/embed/daGcpvxPbCo', 'https://www.youtube.com/embed/nxz1DuVaRr8', 'https://www.youtube.com/embed/Rq-7NgH-hcs', 'https://www.youtube.com/embed/lK6wOG_aDl8', 'https://www.youtube.com/embed/wdaeYD8--84', 'https://www.youtube.com/embed/wGpAb94Vvjs', 'https://www.youtube.com/embed/rRrT37ruAtE', 'https://www.youtube.com/embed/SBD4vH2wRcM', 'https://www.youtube.com/embed/pFebeoSlo6s'];
 
+       //Keep record of what songs have shown
+       var randomNumTracker = [];
+
        //Music
        var music = document.getElementById("music");
        var refresh = document.getElementById("refresh");
@@ -417,6 +420,8 @@
 
        //Random
        var ranNum = Math.floor(Math.random() * songs.length);
+       //Keep the record
+       randomNumTracker.push(ranNum);
        frame.src = songs[ranNum];
 
        //Mode
@@ -458,11 +463,40 @@
 
         function switchSong(){
             ranNum = Math.floor(Math.random() * songs.length);
-            if (videoOn == false){
-                frame.src = songs[ranNum];
+            randomNumTracker.push(ranNum);
+            // console.log(ranNum);
+
+            if (checkForDuplicates(randomNumTracker)){
+                // console.log('Showing this song again: ' + ranNum);
+                randomNumTracker.pop();
+                ranNum = Math.floor(Math.random() * songs.length);
+                if(randomNumTracker.length === songs.length){
+                    randomNumTracker = [];
+                } else{
+                    switchSong();
+                }
             } else {
-                frame.src = videos[ranNum];
+                if (videoOn == false){
+                frame.src = songs[ranNum];
+                } else {
+                    frame.src = videos[ranNum];
+                }
             }
+
+            // console.log(randomNumTracker);
+        }
+
+        function checkForDuplicates(array) {
+            let valuesAlreadySeen = [];
+
+            for (let i = 0; i < array.length; i++) {
+                let value = array[i];
+                if (valuesAlreadySeen.indexOf(value) !== -1) {
+                    return true;
+                }
+                valuesAlreadySeen.push(value);
+            }
+            return false;
         }
 
     </script>
