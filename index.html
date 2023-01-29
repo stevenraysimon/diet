@@ -240,8 +240,9 @@
                 <div id="myBar"></div>
             </div>
             <h1 id="countdown"><span id="days">00</span> days <span id="hours">00</span> hours <span id="minutes">00</span> minutes <span id="seconds">00</span> seconds to go</h1>
-            <h3 id="total">You have gone a total of <span id="goneDays">104</span> days <span id="goneHours">99</span> hours <span id="goneMinutes">99</span> minutes <span id="goneSeconds">99</span> seconds</h3>
+            <h3 id="total">You have gone a total of <span id="goneDays">00</span> days <span id="goneHours">00</span> hours <span id="goneMinutes">00</span> minutes <span id="goneSeconds">00</span> seconds</h3>
             <h3>You are on day <span id="currentDay">00</span> of <span id="totalDays">00</span></h3>
+            <h5>Today is <span id="today">January 16, 2023</span></h5>
             <h5>You started on <span id="startDate">January 16, 2023</span> and will end on <span id="endDate">May 1, 2023</span></h5>
             <br>
             <h3>Raw Diet Challenge:</h3>
@@ -315,34 +316,59 @@
         <iframe id="iframe" src="https://spotify.com" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </body>
     <script>
-        // Set the date we're counting down to
-        var endDate = new Date("May 1, 2023 00:00:00").getTime();
-        var startDate = new Date("January 16, 2023 00:00:00").getTime();
+        // Set the date we're starting with
+        var startMonth = 'January';
+        var startDay = '16';
+        var startYear = '2023';
 
+        //Raw challenge day total
+        var numberOfDays = 105;
+
+        var startDate = new Date(startMonth + " " + startDay + ", " + startYear +" 00:00:00");
+        startDate.setHours(0);
+        console.log(startDate);
+
+        var endDate = startDate.getTime()+(numberOfDays*24*60*60*1000);
+        endDate = new Date(endDate);
+        endDate.setHours(0);
+        console.log(endDate);
+
+        var endMonth = endDate.getMonth();
+        var endDay = endDate.getDate();
+        var endYear = endDate.getFullYear();
+
+        var date, now, distance, done, total, year, getMonth, today;
         var days, hours, minutes, seconds;
         var daysDone, hoursDone, minutesDone, secondsDone;
         var totalDays;
+
+        const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
         // Update the count down every 1 second
         var x = setInterval(function() {
 
             // Get today's date and time
-            var now = new Date().getTime();
+            date = new Date();
+            now = date.getTime();
+
+            year = date.getFullYear();
+            getMonth = month[date.getMonth()];
+            today = date.getDate();;
 
             // Find the distance between now and the count down date
-            var distance = endDate - now;
+            distance = endDate - now;
 
-            var done = now - startDate;
+            done = now - startDate;
 
-            var total = endDate - startDate;
+            total = endDate - startDate;
 
-            // Time calculations for days, hours, minutes and seconds
+            // Time calculations for days, hours, minutes and seconds to go
             days = Math.floor(distance / (1000 * 60 * 60 * 24));
             hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Time calculations for days, hours, minutes and seconds
+            // Time calculations for days, hours, minutes and seconds already passed
             daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
             hoursDone = Math.floor((done % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             minutesDone = Math.floor((done % (1000 * 60 * 60)) / (1000 * 60));
@@ -350,12 +376,17 @@
 
             totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
 
-            // Display the result in the element with id="demo"
+            // Display the results
             document.getElementById("countdown").innerHTML = days + " days " + hours + " hours "
             + minutes + " minutes " + seconds + " seconds to go ";
 
             document.getElementById("total").innerHTML = "You have gone a total of " + daysDone + " days " + hoursDone + " hours "
             + minutesDone + " minutes " + secondsDone + " seconds";
+
+            document.getElementById("today").innerHTML = getMonth +" "+ today +", "+ year;
+
+            document.getElementById('startDate').innerHTML = startMonth +" "+ startDay +", "+ startYear;
+            document.getElementById('endDate').innerHTML = month[endMonth] +" "+ endDay +", "+ endYear;
 
             document.getElementById("currentDay").innerHTML = daysDone + 1;
             document.getElementById("totalDays").innerHTML = totalDays;
@@ -368,38 +399,31 @@
 
         }, 1000);
 
-        var i = 0;
         function progress() {
-            if (i == 0) {
-                i = 1;
                 var progressBar = document.getElementById("myBar");
-                var timeDone = new Date().getTime() - startDate;
-                var width = Math.floor(timeDone / (1000 * 60 * 60 * 24));
-                var total = endDate - startDate;
-                totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
-                progressBar.innerHTML = ((width*100)/totalDays).toFixed(2)  + "%";
-                var timePlus = 1;
-                //var id = setInterval(frame, 1000);
-                function frame(){
-                    if (width >= totalDays) {
-                        clearInterval(id);
-                        i = 0;
-                    } else {
-                        width+=timePlus;
-                        progressBar.style.width = width + "%";
-                        progressBar.innerHTML = width  + "%";
-                    }
+                date = new Date();
+                now = date.getTime();
+                done = now - startDate;
+                daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
+                console.log(daysDone);
+                var width = ((daysDone + 1) * 100)/numberOfDays;
+                width = Math.round(width);
+                if (width >= numberOfDays) {
+                    progressBar.style.width = "100%";
+                    progressBar.innerHTML = "100%";
+                } else {
+                    progressBar.style.width = width + "%";
+                    progressBar.innerHTML = width  + "%";
                 }
-            }
         }
 
        //Progress Bar
        progress();
 
        //Songs
-       var songs = ['https://open.spotify.com/embed/track/5Gl1gvZJujOHi2Jw2wcDdX?utm_source=generator', 'https://open.spotify.com/embed/track/3TirfpSyUYfXE9osoQmhxV?utm_source=generator', 'https://open.spotify.com/embed/track/2goLsvvODILDzeeiT4dAoR?utm_source=generator', 'https://open.spotify.com/embed/track/7sI80PK0P3tDCvULKszqzL?utm_source=generator', 'https://open.spotify.com/embed/track/4wajJ1o7jWIg62YqpkHC7S?utm_source=generator', 'https://open.spotify.com/embed/track/4x8g2OO1JhtmZz6psVAEOH?utm_source=generator', 'https://open.spotify.com/embed/track/2EuIkhXkq3Eo8MioInRm7e?utm_source=generator', 'https://open.spotify.com/embed/track/3kFkvYHAMnE8yMPD2fKzZb?utm_source=generator', 'https://open.spotify.com/embed/track/64qZB8xZ3u2EmH8zSqc7mU?utm_source=generator', 'https://open.spotify.com/embed/track/3yNH4HdWyljKSeLLhktrBd?utm_source=generator', 'https://open.spotify.com/embed/track/7a4AhwfxpHTVW939FsxXZb?utm_source=generator', 'https://open.spotify.com/embed/track/5N7ln3zfkVPd7c8I1Dws3c?utm_source=generator', 'https://open.spotify.com/embed/track/2WZyfujzMweFLnozyUJBkW?utm_source=generator', 'https://open.spotify.com/embed/track/5hkdfA87RZvNaxl6XiveOA?utm_source=generator', 'https://open.spotify.com/embed/track/6f5ExP43esnvdKPddwKXJH?utm_source=generator', 'https://open.spotify.com/embed/track/31dHe2I4tzOKT0ypVpVsuu?utm_source=generator', 'https://open.spotify.com/embed/track/6Up545NUflOiXo8cEraH49?utm_source=generator', 'https://open.spotify.com/embed/track/2LD2gT7gwAurzdQDQtILds?utm_source=generator', 'https://open.spotify.com/embed/track/1wH3PxeMNXKVkuG67czNOQ?utm_source=generator', 'https://open.spotify.com/embed/track/5ovcVaOus1Wv4vTtyGXlhB?utm_source=generator', 'https://open.spotify.com/embed/track/11utMtW3EPeTe1UoUWLfFM?utm_source=generator', 'https://open.spotify.com/embed/track/1DUR7k78QHSWvuCLpU2y4b?utm_source=generator', 'https://open.spotify.com/embed/track/6CU0zWIWVTEnmWpSjVHM93?utm_source=generator', 'https://open.spotify.com/embed/track/423o3ZHIaBtGXyhF1uH41a?utm_source=generator', 'https://open.spotify.com/embed/track/3RgR3cFZ6xh7MlB9DURK6e?utm_source=generator', 'https://open.spotify.com/embed/track/4N6HYihypXOVL24bnaR4fp?utm_source=generator', 'https://open.spotify.com/embed/track/37oLDb3119IdKSIFQmSGRj?utm_source=generator', 'https://open.spotify.com/embed/track/1LiwqqaafXkNQuWGW3HeId?utm_source=generator', 'https://open.spotify.com/embed/track/74k56xjvucElX9S5lY2O6t?utm_source=generator', 'https://open.spotify.com/embed/track/3oqi3tCQ1n2aZUBatDuy3Q?utm_source=generator', 'https://open.spotify.com/embed/track/7jZ4UZAmg006Qx3rVuF7JI?utm_source=generator', 'https://open.spotify.com/embed/track/6zgCycfVETCfk2TNY7Othq?utm_source=generator', 'https://open.spotify.com/embed/track/2bzBI23EJWHjXmGj3xlYaM?utm_source=generator', 'https://open.spotify.com/embed/track/4PkJ7c9y1CwpuVOiJODnCZ?utm_source=generator', 'https://open.spotify.com/embed/track/3jFP1e8IUpD9QbltEI1Hcg?utm_source=generator'];
+       var songs = ['https://open.spotify.com/embed/track/5Gl1gvZJujOHi2Jw2wcDdX?utm_source=generator', 'https://open.spotify.com/embed/track/3TirfpSyUYfXE9osoQmhxV?utm_source=generator', 'https://open.spotify.com/embed/track/2goLsvvODILDzeeiT4dAoR?utm_source=generator', 'https://open.spotify.com/embed/track/7sI80PK0P3tDCvULKszqzL?utm_source=generator', 'https://open.spotify.com/embed/track/4wajJ1o7jWIg62YqpkHC7S?utm_source=generator', 'https://open.spotify.com/embed/track/4x8g2OO1JhtmZz6psVAEOH?utm_source=generator', 'https://open.spotify.com/embed/track/2EuIkhXkq3Eo8MioInRm7e?utm_source=generator', 'https://open.spotify.com/embed/track/3kFkvYHAMnE8yMPD2fKzZb?utm_source=generator', 'https://open.spotify.com/embed/track/64qZB8xZ3u2EmH8zSqc7mU?utm_source=generator', 'https://open.spotify.com/embed/track/3yNH4HdWyljKSeLLhktrBd?utm_source=generator', 'https://open.spotify.com/embed/track/7a4AhwfxpHTVW939FsxXZb?utm_source=generator', 'https://open.spotify.com/embed/track/5N7ln3zfkVPd7c8I1Dws3c?utm_source=generator', 'https://open.spotify.com/embed/track/2WZyfujzMweFLnozyUJBkW?utm_source=generator', 'https://open.spotify.com/embed/track/5hkdfA87RZvNaxl6XiveOA?utm_source=generator', 'https://open.spotify.com/embed/track/6f5ExP43esnvdKPddwKXJH?utm_source=generator', 'https://open.spotify.com/embed/track/31dHe2I4tzOKT0ypVpVsuu?utm_source=generator', 'https://open.spotify.com/embed/track/6Up545NUflOiXo8cEraH49?utm_source=generator', 'https://open.spotify.com/embed/track/2LD2gT7gwAurzdQDQtILds?utm_source=generator', 'https://open.spotify.com/embed/track/1wH3PxeMNXKVkuG67czNOQ?utm_source=generator', 'https://open.spotify.com/embed/track/5ovcVaOus1Wv4vTtyGXlhB?utm_source=generator', 'https://open.spotify.com/embed/track/11utMtW3EPeTe1UoUWLfFM?utm_source=generator', 'https://open.spotify.com/embed/track/1DUR7k78QHSWvuCLpU2y4b?utm_source=generator', 'https://open.spotify.com/embed/track/6CU0zWIWVTEnmWpSjVHM93?utm_source=generator', 'https://open.spotify.com/embed/track/423o3ZHIaBtGXyhF1uH41a?utm_source=generator', 'https://open.spotify.com/embed/track/3RgR3cFZ6xh7MlB9DURK6e?utm_source=generator', 'https://open.spotify.com/embed/track/4N6HYihypXOVL24bnaR4fp?utm_source=generator', 'https://open.spotify.com/embed/track/37oLDb3119IdKSIFQmSGRj?utm_source=generator', 'https://open.spotify.com/embed/track/1LiwqqaafXkNQuWGW3HeId?utm_source=generator', 'https://open.spotify.com/embed/track/74k56xjvucElX9S5lY2O6t?utm_source=generator', 'https://open.spotify.com/embed/track/3oqi3tCQ1n2aZUBatDuy3Q?utm_source=generator', 'https://open.spotify.com/embed/track/7jZ4UZAmg006Qx3rVuF7JI?utm_source=generator', 'https://open.spotify.com/embed/track/6zgCycfVETCfk2TNY7Othq?utm_source=generator', 'https://open.spotify.com/embed/track/2bzBI23EJWHjXmGj3xlYaM?utm_source=generator', 'https://open.spotify.com/embed/track/4PkJ7c9y1CwpuVOiJODnCZ?utm_source=generator', 'https://open.spotify.com/embed/track/3jFP1e8IUpD9QbltEI1Hcg?utm_source=generator', 'https://open.spotify.com/embed/track/3cfOd4CMv2snFaKAnMdnvK?utm_source=generator', 'https://open.spotify.com/embed/track/4ZiAnGIZFFUybp0NZXIYEG?utm_source=generator'];
 
-       var videos = ['https://www.youtube.com/embed/pGgNBTYzY8E', 'https://www.youtube.com/embed/salUViy2uoA', 'https://www.youtube.com/embed/n7wvAEDOxAs', 'https://www.youtube.com/embed/LQ9tq9b0Bd4', 'https://www.youtube.com/embed/TNRCvG9YtYI', 'https://www.youtube.com/embed/Qt87bLX7m_o', 'https://www.youtube.com/embed/wP0-SEmcHWI', 'https://www.youtube.com/embed/GzhZFVRecJo', 'https://www.youtube.com/embed/rDhZJYgTgKk', 'https://www.youtube.com/embed/ck2c3rOGCeI', 'https://www.youtube.com/embed/Z5ZkohRiwK8', 'https://www.youtube.com/embed/vsM_NzNyxlU', 'https://www.youtube.com/embed/INuS80qe_qU', 'https://www.youtube.com/embed/0tZ4SFhqbN8', 'https://www.youtube.com/embed/uYCX19nFmZ0', 'https://www.youtube.com/embed/nIvgTGYZTpE', 'https://www.youtube.com/embed/sIaT8Jl2zpI', 'https://www.youtube.com/embed/OgcY6qlzdf8', 'https://www.youtube.com/embed/odGRbYBU1u8', 'https://www.youtube.com/embed/Ox2g83kGE-U', 'https://www.youtube.com/embed/uP3RjvofwAs', 'https://www.youtube.com/embed/TnzdYbs6Fbc', 'https://www.youtube.com/embed/tLonNru58X4', 'https://www.youtube.com/embed/nUW6G5QdyYU', 'https://www.youtube.com/embed/daGcpvxPbCo', 'https://www.youtube.com/embed/nxz1DuVaRr8', 'https://www.youtube.com/embed/Rq-7NgH-hcs', 'https://www.youtube.com/embed/lK6wOG_aDl8', 'https://www.youtube.com/embed/wdaeYD8--84', 'https://www.youtube.com/embed/wGpAb94Vvjs', 'https://www.youtube.com/embed/rRrT37ruAtE', 'https://www.youtube.com/embed/SBD4vH2wRcM', 'https://www.youtube.com/embed/pFebeoSlo6s', 'https://www.youtube.com/embed/8Zc4S1shXas', 'https://www.youtube.com/embed/2Xqm-zvart0'];
+       var videos = ['https://www.youtube.com/embed/pGgNBTYzY8E', 'https://www.youtube.com/embed/salUViy2uoA', 'https://www.youtube.com/embed/n7wvAEDOxAs', 'https://www.youtube.com/embed/LQ9tq9b0Bd4', 'https://www.youtube.com/embed/TNRCvG9YtYI', 'https://www.youtube.com/embed/Qt87bLX7m_o', 'https://www.youtube.com/embed/wP0-SEmcHWI', 'https://www.youtube.com/embed/GzhZFVRecJo', 'https://www.youtube.com/embed/rDhZJYgTgKk', 'https://www.youtube.com/embed/ck2c3rOGCeI', 'https://www.youtube.com/embed/Z5ZkohRiwK8', 'https://www.youtube.com/embed/vsM_NzNyxlU', 'https://www.youtube.com/embed/INuS80qe_qU', 'https://www.youtube.com/embed/0tZ4SFhqbN8', 'https://www.youtube.com/embed/uYCX19nFmZ0', 'https://www.youtube.com/embed/nIvgTGYZTpE', 'https://www.youtube.com/embed/sIaT8Jl2zpI', 'https://www.youtube.com/embed/OgcY6qlzdf8', 'https://www.youtube.com/embed/odGRbYBU1u8', 'https://www.youtube.com/embed/Ox2g83kGE-U', 'https://www.youtube.com/embed/uP3RjvofwAs', 'https://www.youtube.com/embed/TnzdYbs6Fbc', 'https://www.youtube.com/embed/tLonNru58X4', 'https://www.youtube.com/embed/nUW6G5QdyYU', 'https://www.youtube.com/embed/daGcpvxPbCo', 'https://www.youtube.com/embed/nxz1DuVaRr8', 'https://www.youtube.com/embed/Rq-7NgH-hcs', 'https://www.youtube.com/embed/lK6wOG_aDl8', 'https://www.youtube.com/embed/wdaeYD8--84', 'https://www.youtube.com/embed/wGpAb94Vvjs', 'https://www.youtube.com/embed/rRrT37ruAtE', 'https://www.youtube.com/embed/SBD4vH2wRcM', 'https://www.youtube.com/embed/pFebeoSlo6s', 'https://www.youtube.com/embed/8Zc4S1shXas', 'https://www.youtube.com/embed/2Xqm-zvart0', 'https://www.youtube.com/embed/LYG7sMtb6u8', 'https://www.youtube.com/embed/jgc8a7ikd2w'];
 
        //Keep record of what songs have shown
        var randomNumTracker = [];
