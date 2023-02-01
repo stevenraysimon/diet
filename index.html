@@ -9,14 +9,65 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <style>
+            :root {
+                --blue: #2F67F5;
+                --blue-dark: #87D5F6;
+
+                --blueHover: #2558da;
+                --blueHover-dark: #64bce2;
+
+                --blueActive: #1d48b6;
+                --blueActive-dark: #3794bc;
+
+                --white: #ffffff;
+                --white-dark: #000000;
+
+                --black: #000000;
+                --black-dark: #ffffff;
+
+                --gray: #dddddd;
+                --gray-dark: #333333;
+
+                --grayHover: #aaaaaa;
+                --grayHover-dark: #222222;
+
+                --grayActive: #888888;
+                --grayActive-dark: #000000;
+
+                --spotify: #1ed760;
+                --spotify-dark: #056928;
+
+                --spotifyHover: #169b45;
+                --spotifyHover-dark: #03471b;
+
+                --spotifyActive: #117e37;
+                --spotifyActive-dark: #012b10;
+
+                --youtube: #333333;
+                --youtube-dark: #dddddd;
+
+                --youtubeHover: #222222;
+                --youtubeHover-dark: #aaaaaa;
+
+                --youtubeActive: var(--black);
+                --youtubeActive-dark: var(--white);
+
+                --beforeItem: var(--white);
+
+            }
+
+            ::before {
+                background: var(--beforeItem, #ffffff);
+            }
+
             *{
                 margin: 0;
                 padding: 0;
             }
 
             body{
-                background: #fff;
-                color: #333;
+                background: var(--white, #ffffff);
+                color: var(--youtube, #333333);
             }
 
             .wrapper{
@@ -31,6 +82,74 @@
                 box-sizing: border-box;
                 height: 100%;
                 display: block;
+            }
+
+            /************  Dark Mode Toggle **************/
+
+            .wrapSwitch{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+                margin: 0px 20px;
+            }
+
+            .switch input { 
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: var(--gray, #aaaaaa);
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+            input:checked + .slider {
+                background-color: var(--blue-dark, #2F67F5);
+            }
+
+            input:focus + .slider {
+                box-shadow: 0 0 1px var(--blueActive-dark, #1d48b6);
+            }
+
+            input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 34px;
+            }
+
+            .slider.round:before {
+                border-radius: 50%;
             }
 
             @media screen and (max-width: 700px) {
@@ -59,16 +178,15 @@
 
             #myProgress {
                 width: 100%;
-                background-color: #ddd;
+                background-color: var(--gray, #dddddd);
                 margin-bottom: 15px;
-                /* border-radius: 40px; */
             }
 
             #myBar {
                 width: 1%;
                 height: 30px;
-                background-color: #2F67F5;
-                color: white;
+                background-color: var(--blue, #2F67F5);
+                color: var(--white, #ffffff);
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -125,7 +243,7 @@
             #refresh{
                 width: 50px;
                 height: 50px;
-                background-color: #2F67F5;
+                background-color: var(--blue, #2F67F5);
                 border-radius: 40px;
                 cursor: pointer;
                 text-align: center;
@@ -133,25 +251,25 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: white;
+                color: var(--white, #ffffff);
                 margin-right: 5px;
                 display: none;
             }
 
             #refresh:hover{
-                background-color: #2558da;
+                background-color: var(--blueHover, #2558da);
                 transition: 0.4s;
             }
 
             #refresh:active{
-                background-color: #1d48b6;
+                background-color: var(--blueActive, #1d48b6);;
                 transition: 0s;
             }
 
             #music{
                 width: 50px;
                 height: 50px;
-                background-color: #ddd;
+                background-color: var(--gray, #dddddd);
                 border-radius: 40px;
                 cursor: pointer;
                 text-align: center;
@@ -159,23 +277,23 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: black;
+                color: var(--black, #000000);
             }
 
             #music:hover{
-                background-color: #aaa;
+                background-color: var(--grayHover, #aaaaaa);
                 transition: 0.4s;
             }
 
             #music:active{
-                background-color: #888;
+                background-color: var(--grayActive, #888888);
                 transition: 0s;
             }
 
             #spotify{
                 position: relative;
-                background-color: #1ed760;
-                color: black;
+                background-color: var(--sportify, #1ed760);
+                color: var(--black, #000000);
                 border-radius: 500px;
                 font-size: inherit;
                 padding: 14px 32px;
@@ -190,19 +308,19 @@
             }
 
             #spotify:hover{
-                background-color: #169b45;
+                background-color: var(--spotifyHover,#169b45);
                 transition: 0.4s;
             }
 
             #spotify:active{
-                background-color: #117e37;
+                background-color: var(--spotifyActive, #117e37);
                 transition: 0s;
             }
 
             #youtube{
                 position: relative;
-                background-color: #333;
-                color: white;
+                background-color: var(--youtube, #333333);
+                color: var(--white, #ffffff);
                 border-radius: 500px;
                 font-size: inherit;
                 padding: 14px 32px;
@@ -211,18 +329,18 @@
                 display: none;
             }
 
-            #youtube:hover, #youtube:active{
-                background-color: #222;
+            #youtube:hover{
+                background-color: var(--youtubeHover, #222222);
                 transition: 0.4s;
             }
 
             #youtube:active{
-                background-color: black;
+                background-color: var(--youtubeActive, #000000);
                 transition: 0s;
             }
 
             a{
-                color: #2F67F5;
+                color: var(--blue, #2F67F5);
                 text-decoration: none;
             }
 
@@ -235,11 +353,23 @@
                 font-size: 80%;
                 text-transform: uppercase;
             }
+
+            .darkText{
+                color: var(--gray, #dddddd);
+            }
         </style>
     </head>
     <body>
         <div class="wrapper">
-            <img src="carrots.jpg" />
+            <div class="wrapSwitch">
+                <p>&#9728</p>
+                <label class="switch">
+                    <input type="checkbox" id="toggle" onclick="colorMode()">
+                    <span class="slider round"></span>
+                </label>
+                <p>&#9789</p>
+            </div>
+            <img id="image" src="carrots.jpg" />
             <div id="myProgress">
                 <div id="myBar"></div>
             </div>
@@ -272,7 +402,7 @@
                 <li>Orange Drink - 32-40oz
                     <ul>
                         <li>carrot juice</li>
-                        <li>orange squeezed</li>
+                        <li>orange squeezed (optional)</li>
                     </ul>
                 </li>
                 <li><a title="Propolis" href="https://vimergy.com/products/propolispure">Propolis</a> Supplement</li>
@@ -288,7 +418,7 @@
                                 <li>asparagus</li>
                                 <li>oranges</li>
                                 <li>garlic</li>
-                                <li>serrano pepper</li>
+                                <li>serrano pepper (optional)</li>
                             </ul>
                         </li>
                     </ul>
@@ -304,7 +434,7 @@
                 </li>
             </ul>
             <footer>
-                <p>Developed by Steven Simon</p>
+                <p class="darkText">Developed by Steven Simon</p>
             </footer>
         </div>
         <div id="media-links">
@@ -525,6 +655,162 @@
                 valuesAlreadySeen.push(value);
             }
             return false;
+        }
+
+        //Toggle color mode
+        function colorMode(){
+
+            var links = document.getElementsByTagName("a");
+
+            if (document.getElementById('toggle').checked) {
+
+                //Body
+                document.body.style.backgroundColor = 'var(--white-dark)';
+                document.body.style.color = 'var(--youtube-dark)';
+
+                //Progress Bar
+                document.getElementById('myProgress').style.backgroundColor = 'var(--gray-dark)';
+                document.getElementById('myBar').style.backgroundColor = 'var(--blue-dark)';
+                document.getElementById('myBar').style.color = 'var(--white-dark)';
+
+                //Image
+                document.getElementById('image').src ="carrots-dark.jpg";
+
+                //Links
+                for(var i=0;i<links.length;i++){
+                    if(links[i].href){
+                        links[i].style.color = 'var(--blue-dark)';  
+                    }
+                }
+
+                //Refresh Music
+                document.getElementById('refresh').style.backgroundColor = 'var(--blue-dark)';
+                document.getElementById('refresh').style.color = 'var(--white-dark)';
+
+                document.documentElement.style.setProperty('--beforeItem', "#000000");
+
+                document.getElementById("refresh").addEventListener("mouseover", function() {
+                    document.getElementById("refresh").style.backgroundColor = "var(--blueHover-dark)";
+                });
+                    
+                document.getElementById("refresh").addEventListener("mouseout", function() {
+                    document.getElementById("refresh").style.backgroundColor = "var(--blue-dark)";
+                });
+
+                //Youtube
+                document.getElementById('youtube').style.backgroundColor = 'var(--youtube-dark)';
+                document.getElementById('youtube').style.color = 'var(--white-dark)';
+
+                document.getElementById("youtube").addEventListener("mouseover", function() {
+                    document.getElementById("youtube").style.backgroundColor = "var(--youtubeHover-dark)";
+                });
+                    
+                document.getElementById("youtube").addEventListener("mouseout", function() {
+                    document.getElementById("youtube").style.backgroundColor = "var(--youtube-dark)";
+                });
+
+                //Spotify
+                document.getElementById('spotify').style.backgroundColor = 'var(--spotify-dark)';
+                document.getElementById('spotify').style.color = 'var(--black-dark)';
+
+                document.getElementById("spotify").addEventListener("mouseover", function() {
+                    document.getElementById("spotify").style.backgroundColor = "var(--spotifyHover-dark)";
+                });
+                    
+                document.getElementById("spotify").addEventListener("mouseout", function() {
+                    document.getElementById("spotify").style.backgroundColor = "var(--spotify-dark)";
+                });
+
+                //Music Button
+                document.getElementById('music').style.backgroundColor = 'var(--gray-dark)';
+                document.getElementById('music').style.color = 'var(--black-dark)';
+
+                document.getElementById("music").addEventListener("mouseover", function() {
+                    document.getElementById("music").style.backgroundColor = "var(--grayHover-dark)";
+                });
+                    
+                document.getElementById("music").addEventListener("mouseout", function() {
+                    document.getElementById("music").style.backgroundColor = "var(--gray-dark)";
+                });
+
+                //Dark Text
+                document.querySelector('.darkText').style.color ="var(--youtube)";
+
+            } else {
+
+                //Body
+                document.body.style.backgroundColor = 'var(--white)';
+                document.body.style.color = 'var(--youtube)';
+
+                //Progress Bar
+                document.getElementById('myProgress').style.backgroundColor = 'var(--gray)';
+                document.getElementById('myBar').style.backgroundColor = 'var(--blue)';
+                document.getElementById('myBar').style.color = 'var(--white)';
+
+                //Image
+                document.getElementById('image').src ="carrots.jpg";
+
+                //Links
+                for(var i=0;i<links.length;i++){
+                    if(links[i].href){
+                        links[i].style.color = 'var(--blue)';  
+                    }
+                }
+
+                //Refresh Music
+                document.getElementById('refresh').style.backgroundColor = 'var(--blue)';
+                document.getElementById('refresh').style.color = 'var(--white)';
+
+                document.documentElement.style.setProperty('--beforeItem', "#ffffff");
+
+                document.getElementById("refresh").addEventListener("mouseover", function() {
+                    document.getElementById("refresh").style.backgroundColor = "var(--blueHover)";
+                });
+                    
+                document.getElementById("refresh").addEventListener("mouseout", function() {
+                    document.getElementById("refresh").style.backgroundColor = "var(--blue)";
+                });
+
+                //Youtube
+                document.getElementById('youtube').style.backgroundColor = 'var(--youtube)';
+                document.getElementById('youtube').style.color = 'var(--white)';
+
+                document.getElementById("youtube").addEventListener("mouseover", function() {
+                    document.getElementById("youtube").style.backgroundColor = "var(--youtubeHover)";
+                });
+                    
+                document.getElementById("youtube").addEventListener("mouseout", function() {
+                    document.getElementById("youtube").style.backgroundColor = "var(--youtube)";
+                });
+
+                //Spotify
+                document.getElementById('spotify').style.backgroundColor = 'var(--spotify)';
+                document.getElementById('spotify').style.color = 'var(--black)';
+
+                document.getElementById("spotify").addEventListener("mouseover", function() {
+                    document.getElementById("spotify").style.backgroundColor = "var(--spotifyHover)";
+                });
+                    
+                document.getElementById("spotify").addEventListener("mouseout", function() {
+                    document.getElementById("spotify").style.backgroundColor = "var(--spotify)";
+                });
+
+
+                //Music Button
+                document.getElementById('music').style.backgroundColor = 'var(--gray)';
+                document.getElementById('music').style.color = 'var(--black)';
+
+                document.getElementById("music").addEventListener("mouseover", function() {
+                    document.getElementById("music").style.backgroundColor = "var(--grayHover)";
+                });
+                    
+                document.getElementById("music").addEventListener("mouseout", function() {
+                    document.getElementById("music").style.backgroundColor = "var(--gray)";
+                });
+
+                //Dark Text
+                document.querySelector('.darkText').style.color ="var(--gray)";
+            }
         }
 
     </script>
