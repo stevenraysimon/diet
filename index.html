@@ -426,6 +426,7 @@
                                 <li>spring mix lettuce</li>
                                 <li>green onions</li>
                                 <li>spinach</li>
+                                <li>arugula</li>
                                 <li>broccoli</li>
                                 <li>tomatoes</li>
                                 <li>red onion</li>
@@ -500,11 +501,13 @@
 
             // Get today's date and time
             date = new Date();
+            //Timezones from moment.js
+            //date = convertTZ(date,"America/Chicago");
             now = date.getTime();
 
             year = date.getFullYear();
             getMonth = month[date.getMonth()];
-            today = date.getDate();;
+            today = date.getDate();
 
             // Find the distance between now and the count down date
             distance = endDate - now;
@@ -550,9 +553,16 @@
 
         }, 1000);
 
+        //Time zone
+        function convertTZ(date, tzString) {
+            return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+        }
+
         function progress() {
                 var progressBar = document.getElementById("myBar");
                 date = new Date();
+                //Timezones from moment.js
+                //date = convertTZ(date, "America/Chicago");
                 now = date.getTime();
                 done = now - startDate;
                 daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
