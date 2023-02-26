@@ -376,7 +376,7 @@
             <h1 id="countdown"><span id="days">00</span> days <span id="hours">00</span> hours <span id="minutes">00</span> minutes <span id="seconds">00</span> seconds to go</h1>
             <h3 id="total">You have gone a total of <span id="goneDays">00</span> days <span id="goneHours">00</span> hours <span id="goneMinutes">00</span> minutes <span id="goneSeconds">00</span> seconds</h3>
             <h3>You are on day <span id="currentDay">00</span> of <span id="totalDays">00</span></h3>
-            <h5>Today is <span id="today">January 16, 2023</span></h5>
+            <h5>Today is <span id="dayOfWeek">Monday</span> <span id="today">January 16, 2023</span></h5>
             <h5>You started on <span id="startDate">January 16, 2023</span> and will end on <span id="endDate">May 1, 2023</span></h5>
             <br>
             <h3>Raw Diet Challenge:</h3>
@@ -482,6 +482,7 @@
         var startMonth = 'January';
         var startDay = '16';
         var startYear = '2023';
+        const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
         //Raw challenge day total
         var numberOfDays = 105;
@@ -499,7 +500,7 @@
         var endDay = endDate.getDate();
         var endYear = endDate.getFullYear();
 
-        var date, now, distance, done, total, year, getMonth, today;
+        var date, now, distance, done, total, year, getMonth, today, dayOfWeek;
         var days, hours, minutes, seconds;
         var daysDone, hoursDone, minutesDone, secondsDone;
         var totalDays;
@@ -521,10 +522,11 @@
 
             // Find the distance between now and the count down date
             distance = endDate - now;
-
             done = now - startDate;
-
             total = endDate - startDate;
+
+            //What day of the week
+            dayOfWeek = weekday[date.getDay()];
 
             // Time calculations for days, hours, minutes and seconds to go
             days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -548,6 +550,7 @@
             + minutesDone + " minutes " + secondsDone + " seconds";
 
             document.getElementById("today").innerHTML = getMonth +" "+ today +", "+ year;
+            document.getElementById("dayOfWeek").innerHTML = dayOfWeek;
 
             document.getElementById('startDate').innerHTML = startMonth +" "+ startDay +", "+ startYear;
             document.getElementById('endDate').innerHTML = month[endMonth] +" "+ endDay +", "+ endYear;
@@ -560,6 +563,9 @@
                 clearInterval(x);
                 document.getElementById("demo").innerHTML = "EXPIRED";
             }
+
+            //Progress Bar
+            progress();
 
         }, 1000);
 
@@ -587,9 +593,6 @@
                     progressBar.innerHTML = width  + "%";
                 }
         }
-
-       //Progress Bar
-       progress();
 
        //Songs
        var songs = ['https://open.spotify.com/embed/track/5Gl1gvZJujOHi2Jw2wcDdX?utm_source=generator', 'https://open.spotify.com/embed/track/3TirfpSyUYfXE9osoQmhxV?utm_source=generator', 'https://open.spotify.com/embed/track/2goLsvvODILDzeeiT4dAoR?utm_source=generator', 'https://open.spotify.com/embed/track/7sI80PK0P3tDCvULKszqzL?utm_source=generator', 'https://open.spotify.com/embed/track/4wajJ1o7jWIg62YqpkHC7S?utm_source=generator', 'https://open.spotify.com/embed/track/4x8g2OO1JhtmZz6psVAEOH?utm_source=generator', 'https://open.spotify.com/embed/track/2EuIkhXkq3Eo8MioInRm7e?utm_source=generator', 'https://open.spotify.com/embed/track/3kFkvYHAMnE8yMPD2fKzZb?utm_source=generator', 'https://open.spotify.com/embed/track/64qZB8xZ3u2EmH8zSqc7mU?utm_source=generator', 'https://open.spotify.com/embed/track/3yNH4HdWyljKSeLLhktrBd?utm_source=generator', 'https://open.spotify.com/embed/track/7a4AhwfxpHTVW939FsxXZb?utm_source=generator', 'https://open.spotify.com/embed/track/5N7ln3zfkVPd7c8I1Dws3c?utm_source=generator', 'https://open.spotify.com/embed/track/2WZyfujzMweFLnozyUJBkW?utm_source=generator', 'https://open.spotify.com/embed/track/5hkdfA87RZvNaxl6XiveOA?utm_source=generator', 'https://open.spotify.com/embed/track/6f5ExP43esnvdKPddwKXJH?utm_source=generator', 'https://open.spotify.com/embed/track/31dHe2I4tzOKT0ypVpVsuu?utm_source=generator', 'https://open.spotify.com/embed/track/6Up545NUflOiXo8cEraH49?utm_source=generator', 'https://open.spotify.com/embed/track/2LD2gT7gwAurzdQDQtILds?utm_source=generator', 'https://open.spotify.com/embed/track/1wH3PxeMNXKVkuG67czNOQ?utm_source=generator', 'https://open.spotify.com/embed/track/5ovcVaOus1Wv4vTtyGXlhB?utm_source=generator', 'https://open.spotify.com/embed/track/11utMtW3EPeTe1UoUWLfFM?utm_source=generator', 'https://open.spotify.com/embed/track/1DUR7k78QHSWvuCLpU2y4b?utm_source=generator', 'https://open.spotify.com/embed/track/6CU0zWIWVTEnmWpSjVHM93?utm_source=generator', 'https://open.spotify.com/embed/track/423o3ZHIaBtGXyhF1uH41a?utm_source=generator', 'https://open.spotify.com/embed/track/3RgR3cFZ6xh7MlB9DURK6e?utm_source=generator', 'https://open.spotify.com/embed/track/4N6HYihypXOVL24bnaR4fp?utm_source=generator', 'https://open.spotify.com/embed/track/37oLDb3119IdKSIFQmSGRj?utm_source=generator', 'https://open.spotify.com/embed/track/1LiwqqaafXkNQuWGW3HeId?utm_source=generator', 'https://open.spotify.com/embed/track/74k56xjvucElX9S5lY2O6t?utm_source=generator', 'https://open.spotify.com/embed/track/3oqi3tCQ1n2aZUBatDuy3Q?utm_source=generator', 'https://open.spotify.com/embed/track/7jZ4UZAmg006Qx3rVuF7JI?utm_source=generator', 'https://open.spotify.com/embed/track/6zgCycfVETCfk2TNY7Othq?utm_source=generator', 'https://open.spotify.com/embed/track/2bzBI23EJWHjXmGj3xlYaM?utm_source=generator', 'https://open.spotify.com/embed/track/4PkJ7c9y1CwpuVOiJODnCZ?utm_source=generator', 'https://open.spotify.com/embed/track/3jFP1e8IUpD9QbltEI1Hcg?utm_source=generator', 'https://open.spotify.com/embed/track/3cfOd4CMv2snFaKAnMdnvK?utm_source=generator', 'https://open.spotify.com/embed/track/4ZiAnGIZFFUybp0NZXIYEG?utm_source=generator', 'https://open.spotify.com/embed/track/02oAqE4RUmemtnHDBMgkWl?utm_source=generator', 'https://open.spotify.com/embed/track/6Qpfsw8OS5HW5XxgmXYLWS?utm_source=generator', 'https://open.spotify.com/embed/track/0wJyFu6JHwUoKQN5X3uzVe?utm_source=generator', 'https://open.spotify.com/embed/track/7yIhpQsHXI4VXNkQS0meWZ?utm_source=generator'];
