@@ -464,7 +464,7 @@
             <footer>
                 <p class="darkText">Developed by Steven Simon</p>
             </footer>
-        </div>
+        </div><!--wrapper-->
         <div id="media-links">
             <div class="flex">
                 <div id="refresh">&#8635</div>
@@ -619,6 +619,15 @@
        music.addEventListener("click", showSong);
        youtube.addEventListener("click", switchMode);
        refresh.addEventListener("click", switchSong);
+       //Video on end
+       frame.addEventListener("onStateChange", function(state){
+            if(state === 0){
+                if(videoOn == true){
+                    // the video is end, do something here.
+                    switchSong();
+                }
+            }
+        });
 
        //Random
        var ranNum = Math.floor(Math.random() * songs.length);
@@ -679,9 +688,12 @@
                 }
             } else {
                 if (videoOn == false){
-                frame.src = songs[ranNum];
+                    frame.src = songs[ranNum];
                 } else {
                     frame.src = videos[ranNum];
+                    //Automatic play
+                    frame.src += '&autoplay=1';
+
                 }
             }
         }
