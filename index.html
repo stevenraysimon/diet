@@ -620,14 +620,15 @@
        youtube.addEventListener("click", switchMode);
        refresh.addEventListener("click", switchSong);
        //Video on end
-       frame.addEventListener("onStateChange", function(state){
-            if(state === 0){
-                if(videoOn == true){
-                    // the video is end, do something here.
-                    switchSong();
-                }
-            }
-        });
+    //    frame.addEventListener("onStateChange", function(state){
+    //         if(state === 0){
+    //             if(videoOn == true){
+    //                 // the video is end, do something here.
+    //                 alert('Youtube ended.');
+    //                 switchSong();
+    //             }
+    //         }
+    //     });
 
        //Random
        var ranNum = Math.floor(Math.random() * songs.length);
