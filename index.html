@@ -192,6 +192,10 @@
                 align-items: center;
             }
 
+            #startDateAsk{
+                display: inline-block;
+            }
+
             ul{
                 text-align: left;
                 max-width: 450px;
@@ -373,6 +377,7 @@
             <div id="myProgress">
                 <div id="myBar"></div>
             </div>
+            <h3 id="startDateAsk">Start Date:</h3><input id="dateAsk" type="date">
             <h1 id="countdown"><span id="days">00</span> days <span id="hours">00</span> hours <span id="minutes">00</span> minutes <span id="seconds">00</span> seconds to go</h1>
             <h3 id="total">You have gone a total of <span id="goneDays">00</span> days <span id="goneHours">00</span> hours <span id="goneMinutes">00</span> minutes <span id="goneSeconds">00</span> seconds</h3>
             <h3>You are on day <span id="currentDay">00</span> of <span id="totalDays">00</span></h3>
@@ -477,6 +482,7 @@
         </div>
         <iframe id="iframe" src="https://spotify.com" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </body>
+    <script src="http://www.youtube.com/player_api"></script>
     <script>
         // Set the date we're starting with
         var startMonth = 'January';
@@ -484,19 +490,34 @@
         var startYear = '2023';
         const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-        //Raw challenge day total
-        var numberOfDays = 105;
-
         var startDate = new Date(startMonth + " " + startDay + ", " + startYear +" 00:00:00");
+        console.log("startDate: "+startDate);
         startDate.setHours(0);
 
-        var endDate = startDate.getTime()+(numberOfDays*24*60*60*1000);
-        endDate = new Date(endDate);
+        //document.getElementById('startDate').textContent = startDate;
+
+        //Get date input
+        var dateAsk = document.getElementById('dateAsk');
+        dateAsk.addEventListener("change", function () {
+            const dateAskValue = dateAsk.value;
+            console.log(dateAskValue);
+            startDate = new Date(dateAskValue + " 00:00:00");
+            startDate.setHours(0);
+            endDate = startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000;
+            endDate = new Date(endDate);
+            endDate.setHours(0);
+            document.getElementById('startDate').textContent = startDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+            document.getElementById('totalDays').textContent = totalDays;
+            resetInterval(); // Reset the setInterval with the updated dates
+        });
+
+        //Raw challenge day total
+        var numberOfDays = 50;
+
+        // Calculate the end date 50 days away from the start date
+        var endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
         endDate.setHours(0);
 
-        var endMonth = endDate.getMonth();
-        var endDay = endDate.getDate();
-        var endYear = endDate.getFullYear();
 
         var date, now, distance, done, total, year, getMonth, today, dayOfWeek;
         var days, hours, minutes, seconds;
@@ -505,91 +526,116 @@
 
         const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-        // Update the count down every 1 second
-        var x = setInterval(function() {
+        // Create the countdown
+        var interval;
 
-            // Get today's date and time
+        function progress() {
+            var progressBar = document.getElementById("myBar");
             date = new Date();
-            //Timezones from moment.js
-            //date = convertTZ(date,"America/Chicago");
+            // Timezones from moment.js
+            // date = convertTZ(date, "America/Chicago");
             now = date.getTime();
+            done = now - startDate;
+            daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
+            // console.log(daysDone);
+            var width = ((daysDone + 1) * 100) / numberOfDays;
+            width = Math.round(width);
+            if (width >= numberOfDays) {
+                progressBar.style.width = "100%";
+                progressBar.innerHTML = "100%";
+            } else {
+                progressBar.style.width = width + "%";
+                progressBar.innerHTML = width + "%";
+            }
+        }
 
-            year = date.getFullYear();
-            getMonth = month[date.getMonth()];
-            today = date.getDate();
+        function resetProgress() {
+            var progressBar = document.getElementById("myBar");
+            progressBar.style.width = "0%";
+            progressBar.innerHTML = "0%";
+        }
+
+        function resetInterval() {
+            clearInterval(interval);
+            interval = setInterval(startCountdown, 1000);
+            resetProgress(); // Reset the progress bar
+            progress();
+        }
+
+        // Call resetInterval initially to start the countdown and set the progress bar
+        resetInterval();
+
+
+        function startCountdown() {
+            // Get today's date and time
+            var date = new Date();
+            // Timezones from moment.js
+            // date = convertTZ(date,"America/Chicago");
+            var now = date.getTime();
+
+            var year = date.getFullYear();
+            var getMonth = month[date.getMonth()];
+            var today = date.getDate();
 
             // Find the distance between now and the count down date
-            distance = endDate - now;
-            done = now - startDate;
-            total = endDate - startDate;
+            var distance = endDate - now;
+            var done = now - startDate;
+            var total = endDate - startDate;
 
-            //What day of the week
-            dayOfWeek = weekday[date.getDay()];
+            // What day of the week
+            var dayOfWeek = weekday[date.getDay()];
 
-            // Time calculations for days, hours, minutes and seconds to go
-            days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Time calculations for days, hours, minutes, and seconds to go
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Time calculations for days, hours, minutes and seconds already passed
-            daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
-            hoursDone = Math.floor((done % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            minutesDone = Math.floor((done % (1000 * 60 * 60)) / (1000 * 60));
-            secondsDone = Math.floor((done % (1000 * 60)) / 1000);
+            // Time calculations for days, hours, minutes, and seconds already passed
+            var daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
+            var hoursDone = Math.floor((done % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutesDone = Math.floor((done % (1000 * 60 * 60)) / (1000 * 60));
+            var secondsDone = Math.floor((done % (1000 * 60)) / 1000);
 
-            totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
+            var totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
 
             // Display the results
-            document.getElementById("countdown").innerHTML = days + " days " + hours + " hours "
-            + minutes + " minutes " + seconds + " seconds to go ";
+            document.getElementById("countdown").innerHTML =
+                days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds to go ";
 
-            document.getElementById("total").innerHTML = "You have gone a total of " + daysDone + " days " + hoursDone + " hours "
-            + minutesDone + " minutes " + secondsDone + " seconds";
+            document.getElementById("total").innerHTML =
+                "You have gone a total of " +
+                daysDone +
+                " days " +
+                hoursDone +
+                " hours " +
+                minutesDone +
+                " minutes " +
+                secondsDone +
+                " seconds";
 
-            document.getElementById("today").innerHTML = getMonth +" "+ today +", "+ year;
+            document.getElementById("today").innerHTML = getMonth + " " + today + ", " + year;
             document.getElementById("dayOfWeek").innerHTML = dayOfWeek;
 
-            document.getElementById('startDate').innerHTML = startMonth +" "+ startDay +", "+ startYear;
-            document.getElementById('endDate').innerHTML = month[endMonth] +" "+ endDay +", "+ endYear;
+            document.getElementById("startDate").innerHTML = startMonth + " " + startDay + ", " + startYear;
+            document.getElementById("endDate").innerHTML = month[endMonth] + " " + endDay + ", " + endYear;
 
             document.getElementById("currentDay").innerHTML = daysDone + 1;
             document.getElementById("totalDays").innerHTML = totalDays;
 
             // If the count down is finished, write some text
             if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("demo").innerHTML = "EXPIRED";
+                document.getElementById("myBar").innerHTML = "EXPIRED";
             }
 
-            //Progress Bar
+            // Progress Bar
             progress();
+        }
 
-        }, 1000);
 
         //Time zone
         function convertTZ(date, tzString) {
             return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
-        }
-
-        function progress() {
-                var progressBar = document.getElementById("myBar");
-                date = new Date();
-                //Timezones from moment.js
-                //date = convertTZ(date, "America/Chicago");
-                now = date.getTime();
-                done = now - startDate;
-                daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
-                //console.log(daysDone);
-                var width = ((daysDone + 1) * 100)/numberOfDays;
-                width = Math.round(width);
-                if (width >= numberOfDays) {
-                    progressBar.style.width = "100%";
-                    progressBar.innerHTML = "100%";
-                } else {
-                    progressBar.style.width = width + "%";
-                    progressBar.innerHTML = width  + "%";
-                }
         }
 
        //Songs
@@ -619,16 +665,23 @@
        music.addEventListener("click", showSong);
        youtube.addEventListener("click", switchMode);
        refresh.addEventListener("click", switchSong);
-       //Video on end
-    //    frame.addEventListener("onStateChange", function(state){
-    //         if(state === 0){
-    //             if(videoOn == true){
-    //                 // the video is end, do something here.
-    //                 alert('Youtube ended.');
-    //                 switchSong();
-    //             }
-    //         }
-    //     });
+       //Automatically switchSongs when video finishes playing
+       //Detect if youtube finsihed playing
+       var player;
+       function onYouTubePlayerAPIReady(){
+            player = new YT.Player('iframe', {
+                events: {
+                    onStateChange: onPlayerStateChange
+                }
+            });
+       }
+       // when video ends
+       function onPlayerStateChange(event){        
+            if(event.data === 0) {          
+                alert('done');
+            }
+        }
+
 
        //Random
        var ranNum = Math.floor(Math.random() * songs.length);
@@ -693,8 +746,6 @@
                 } else {
                     frame.src = videos[ranNum];
                     //Automatic play
-                    //frame.src += '&autoplay=1';
-
                 }
             }
         }
