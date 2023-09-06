@@ -1,0 +1,352 @@
+:root {
+    --blue: #2F67F5;
+    --blue-dark: #87D5F6;
+
+    --blueHover: #2558da;
+    --blueHover-dark: #64bce2;
+
+    --blueActive: #1d48b6;
+    --blueActive-dark: #3794bc;
+
+    --white: #ffffff;
+    --white-dark: #000000;
+
+    --black: #000000;
+    --black-dark: #ffffff;
+
+    --gray: #dddddd;
+    --gray-dark: #333333;
+
+    --grayHover: #aaaaaa;
+    --grayHover-dark: #222222;
+
+    --grayActive: #888888;
+    --grayActive-dark: #000000;
+
+    --spotify: #1ed760;
+    --spotify-dark: #056928;
+
+    --spotifyHover: #169b45;
+    --spotifyHover-dark: #03471b;
+
+    --spotifyActive: #117e37;
+    --spotifyActive-dark: #012b10;
+
+    --youtube: #333333;
+    --youtube-dark: #dddddd;
+
+    --youtubeHover: #222222;
+    --youtubeHover-dark: #aaaaaa;
+
+    --youtubeActive: var(--black);
+    --youtubeActive-dark: var(--white);
+
+    --beforeItem: var(--white);
+
+}
+
+::before {
+    background: var(--beforeItem, #ffffff);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: var(--white, #ffffff);
+    color: var(--youtube, #333333);
+}
+
+.wrapper{
+    margin: auto;
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    font-family:'Courier New', Courier, monospace;
+    /* font-style: italic; */
+    font-size: 1.2em;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100%;
+    display: block;
+}
+
+/************  Dark Mode Toggle **************/
+
+.wrapSwitch{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 0px 20px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray, #aaaaaa);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--blue-dark, #2F67F5);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--blueActive-dark, #1d48b6);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+@media screen and (max-width: 700px) {
+    .wrapper{
+        height: auto;
+    }
+
+    iframe{
+        margin-right: 0px !important;
+        padding: 0px 10px !important;
+        max-width: none !important;
+    }
+
+    h1, h3{
+        font-size: 96%;
+    }
+
+    #spotify, #youtube{
+        font-size: 80% !important;
+    }
+}
+
+h1, h3{
+    margin-bottom: 15px;
+}
+
+#myProgress {
+    width: 100%;
+    background-color: var(--gray, #dddddd);
+    margin-bottom: 15px;
+}
+
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: var(--blue, #2F67F5);
+    color: var(--white, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#startDateAsk{
+    display: inline-block;
+}
+
+ul{
+    text-align: left;
+    max-width: 450px;
+    margin:0  auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+li li{
+    font-size: 80%;
+    margin-left: 30px;
+}
+
+img{
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+#iframe{
+    position: fixed;
+    bottom: 10px;
+    right: -500px;
+    max-width: 450px;
+    width: 100%;
+    display: none;
+    padding: 0px;
+    box-sizing: border-box;
+    margin-right: 10px;
+    border-radius:12px;
+    transition: 0.4s;
+}
+
+#media-links{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.flex{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#refresh{
+    width: 50px;
+    height: 50px;
+    background-color: var(--blue, #2F67F5);
+    border-radius: 40px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white, #ffffff);
+    margin-right: 5px;
+    display: none;
+}
+
+#refresh:hover{
+    background-color: var(--blueHover, #2558da);
+    transition: 0.4s;
+}
+
+#refresh:active{
+    background-color: var(--blueActive, #1d48b6);;
+    transition: 0s;
+}
+
+#music{
+    width: 50px;
+    height: 50px;
+    background-color: var(--gray, #dddddd);
+    border-radius: 40px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--black, #000000);
+}
+
+#music:hover{
+    background-color: var(--grayHover, #aaaaaa);
+    transition: 0.4s;
+}
+
+#music:active{
+    background-color: var(--grayActive, #888888);
+    transition: 0s;
+}
+
+#spotify{
+    position: relative;
+    background-color: var(--sportify, #1ed760);
+    color: var(--black, #000000);
+    border-radius: 500px;
+    font-size: inherit;
+    padding: 14px 32px;
+    border: none;
+    margin-right: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+a button{
+    text-decoration: none !important;
+}
+
+#spotify:hover{
+    background-color: var(--spotifyHover,#169b45);
+    transition: 0.4s;
+}
+
+#spotify:active{
+    background-color: var(--spotifyActive, #117e37);
+    transition: 0s;
+}
+
+#youtube{
+    position: relative;
+    background-color: var(--youtube, #333333);
+    color: var(--white, #ffffff);
+    border-radius: 500px;
+    font-size: inherit;
+    padding: 14px 32px;
+    border: none;
+    cursor: pointer;
+    display: none;
+}
+
+#youtube:hover{
+    background-color: var(--youtubeHover, #222222);
+    transition: 0.4s;
+}
+
+#youtube:active{
+    background-color: var(--youtubeActive, #000000);
+    transition: 0s;
+}
+
+a{
+    color: var(--blue, #2F67F5);
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+footer{
+    margin: 30px 0;
+    font-size: 80%;
+    text-transform: uppercase;
+}
+
+.darkText{
+    color: var(--gray, #dddddd);
+}
