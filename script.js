@@ -84,10 +84,6 @@ function resetInterval() {
     progress();
 }
 
-// Call resetInterval initially to start the countdown and set the progress bar
-resetInterval();
-
-
 function startCountdown() {
     // Get today's date and time
     var date = new Date();
