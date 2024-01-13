@@ -1,134 +1,189 @@
 <!doctype html>
 <html>
-    <head>
-        <title>Raw Diet Timer</title>
-        <meta charset="UTF-8">
-        <meta name="description" content="Raw Diet Countdown">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Steven Simon">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div class="wrapper">
-            <div class="wrapSwitch">
-                <p>&#9728</p>
-                <label class="switch">
-                    <input type="checkbox" id="toggle" autocomplete="off" onclick="colorMode()">
-                    <span class="slider round"></span>
-                </label>
-                <p>&#9789</p>
-            </div>
-            <img id="image" src="carrots.jpg" />
-            <div id="myProgress">
-                <div id="myBar"></div>
-            </div>
-            <h3 id="startDateAsk">Start Date:</h3><input id="dateAsk" type="date">
-            <h1 id="countdown"><span id="days">00</span> days <span id="hours">00</span> hours <span id="minutes">00</span> minutes <span id="seconds">00</span> seconds to go</h1>
-            <h3 id="total">You have gone a total of <span id="goneDays">00</span> days <span id="goneHours">00</span> hours <span id="goneMinutes">00</span> minutes <span id="goneSeconds">00</span> seconds</h3>
+
+<head>
+    <title>Raw Diet Timer</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Raw Diet Countdown">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Steven Simon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="wrapSwitch">
+            <p>&#9728</p>
+            <label class="switch">
+                <input type="checkbox" id="toggle" autocomplete="off" onclick="colorMode()">
+                <span class="slider round"></span>
+            </label>
+            <p>&#9789</p>
+        </div>
+        <img id="image" src="carrots.jpg" />
+        <div id="myProgress">
+            <div id="myBar"></div>
+        </div>
+        <h3 id="startDateAsk">Start Date:</h3><input id="dateAsk" type="date">
+        <div class="timeDisplay">
+            <h1 id="countdown"><span id="days">00</span> days <span id="hours">00</span> hours <span
+                    id="minutes">00</span>
+                minutes <span id="seconds">00</span> seconds to go</h1>
+            <h3 id="total">You have gone a total of <span id="goneDays">00</span> days <span id="goneHours">00</span>
+                hours
+                <span id="goneMinutes">00</span> minutes <span id="goneSeconds">00</span> seconds
+            </h3>
             <h3>You are on day <span id="currentDay">00</span> of <span id="totalDays">00</span></h3>
             <h5>Today is <span id="dayOfWeek">Monday</span> <span id="today">January 16, 2023</span></h5>
-            <h5>You started on <span id="startDate">January 16, 2023</span> and will end on <span id="endDate">May 1, 2023</span></h5>
-            <br>
-            <h3>Raw Diet Challenge:</h3>
-            <ul>
-                <li>Lemon Water - 16oz</li>
-                <li>Celery Juice - 16-32oz</li>
-                <li><a title="Heavy Metal Detox Smoothie" href="https://www.medicalmedium.com/mm101/medical-medium-heavy-metal-detox.htm">Heavy Metal Detox Smoothie - 32-48oz</a>
-                        <ul>
-                            <li><a title="wild blueberries" href="https://www.wymans.com/products/wild-blueberries">wild blueberries</a></li>
-                            <li>orange squeezed</li>
-                            <li>bananas</li>
-                            <li>cilantro</li>
-                            <li><a title="barley grass juice powder" href="https://www.amazon.com/Numami-Organic-Barley-Soluble-Smoothie/dp/B08N196CMH/ref=sr_1_7?m=A13A1Y3VTMSFEO&qid=1674207239&s=merchant-items&sr=1-7&th=1">barley grass juice powder</a></li>
-                            <li><a title="spirulina" href="https://www.amazon.com/Micro-Ingredients-Antioxidant-Non-Irradiated-Non-Contaminated/dp/B01DPW5FWW/ref=pd_bxgy_vft_none_img_sccl_2/137-0067831-6312616?pd_rd_w=V82Jc&content-id=amzn1.sym.7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_p=7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_r=BDBT6T6Y0SMFA91QWP87&pd_rd_wg=9kYNL&pd_rd_r=058cd4bf-6bfb-45e4-8159-dc25920cc6d6&pd_rd_i=B01DPW5FWW&psc=1">spirulina</a></li>
-                            <li><a title="dulse" href="https://www.amazon.com/dp/B07Q28642S?ref=ppx_yo2ov_dt_b_product_details&th=1">dulse</a></li>
-                            <li>water</li>
-                        </ul>
-                </li>
-                <li>Apple(s) peeled</li>
-                <li><a title="Zinc" href="https://vimergy.com/products/zinc">Zinc</a> Supplement</li>
-                <li>Banana(s)</li>
-                <li><a title="B12" href="https://vimergy.com/products/organic-b12">B12</a> Supplement</li>
-                <li>Orange Drink - 32-40oz
-                    <ul>
-                        <li>carrot juice</li>
-                        <li>orange squeezed (optional)</li>
-                    </ul>
-                </li>
-                <li><a title="Propolis" href="https://vimergy.com/products/propolispure">Propolis</a> Supplement</li>
-                <li>Salad
-                    <ul>
-                        <li><a title="kale salad" href="https://www.medicalmedium.com/blog/chopped-kale-salad">kale salad</a>
-                            <ul>
-                                <li>kale</li>
-                                <li>green onions</li>
-                                <li>cucumber</li>
-                                <li>celery</li>
-                                <li>tomatoes</li>
-                                <li>asparagus</li>
-                                <li>oranges</li>
-                                <li>garlic</li>
-                                <li>serrano pepper (optional)</li>
-                            </ul>
-                        </li>
-                        <li>greens salad</a>
-                            <ul>
-                                <li>spring mix lettuce</li>
-                                <li>green onions</li>
-                                <li>spinach</li>
-                                <li>arugula</li>
-                                <li>broccoli</li>
-                                <li>tomatoes</li>
-                                <li>red onion</li>
-                                <li>baby carrots</li>
-                                <li>bell pepper</li>
-                                <li>garlic</li>
-                                <li>serrano pepper (optional)</li>
-                                <li>lemon squeezed</li>
-                                <li>orange squeezed</li>
-                                <li>strawberries</li>
-                            </ul>
-                        </li>
-                        <li>guacamole salad (on occasion in the evenings)</a>
-                            <ul>
-                                <li>avacado</li>
-                                <li>red onion</li>
-                                <li>lime</li>
-                                <li>cilantro</li>
-                                <li>garlic</li>
-                                <li>tomatoes</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a title="Cat's Claw" href="https://vimergy.com/products/organic-cats-claw">Cat's Claw</a> Supplement</li>
-                <li><a title="Liver Rescue Smoothie" href="https://www.medicalmedium.com/blog/liver-rescue-smoothie">Liver Rescue Smoothie</a>
-                    <ul>
-                        <li>bananas</li>
-                        <li>dragon fruit</li>
-                        <li><a title="wild blueberries" href="https://www.wymans.com/products/wild-blueberries">wild blueberries</a></li>
-                        <li>water</li>
-                    </ul>
-                </li>
-            </ul>
-            <footer>
-                <p class="darkText">Developed by Steven Simon</p>
-            </footer>
-        </div><!--wrapper-->
-        <div id="media-links">
-            <div class="flex">
-                <div id="refresh">&#8635</div>
-                <div id="music">&#9834</div>
-            </div>
-            <div class="flex">
-                <a href="https://accounts.spotify.com/en/login" title="Log into Spotify" target="_blank"><button id="spotify">Log into Spotify for full song</button></a>
-                <button id="youtube">Try YouTube</button>
-            </div>
+            <h5>You started on <span id="startDate">January 16, 2023</span> and will end on <span id="endDate">May 1,
+                    2023</span></h5>
         </div>
-        <iframe id="iframe" src="https://spotify.com" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </body>
-    <script src="http://www.youtube.com/player_api"></script>
-    <script src="script.js"></script>
+        <br>
+        <h3><span id="totalDaysTitle">3</span> Day Raw Diet Challenge:</h3>
+        <ul>
+            <li>Lemon Water - 16oz</li>
+            <li>Celery Juice - 16-32oz</li>
+            <li><a title="Heavy Metal Detox Smoothie"
+                    href="https://www.medicalmedium.com/mm101/medical-medium-heavy-metal-detox.htm">Heavy Metal Detox
+                    Smoothie - 32-48oz</a>
+                <ul>
+                    <li><a title="wild blueberries" href="https://www.wymans.com/products/wild-blueberries">wild
+                            blueberries</a></li>
+                    <li>orange squeezed</li>
+                    <li>bananas</li>
+                    <li>cilantro</li>
+                    <li><a title="barley grass juice powder"
+                            href="https://www.amazon.com/Numami-Organic-Barley-Soluble-Smoothie/dp/B08N196CMH/ref=sr_1_7?m=A13A1Y3VTMSFEO&qid=1674207239&s=merchant-items&sr=1-7&th=1">barley
+                            grass juice powder</a></li>
+                    <li><a title="spirulina"
+                            href="https://www.amazon.com/Micro-Ingredients-Antioxidant-Non-Irradiated-Non-Contaminated/dp/B01DPW5FWW/ref=pd_bxgy_vft_none_img_sccl_2/137-0067831-6312616?pd_rd_w=V82Jc&content-id=amzn1.sym.7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_p=7f0cf323-50c6-49e3-b3f9-63546bb79c92&pf_rd_r=BDBT6T6Y0SMFA91QWP87&pd_rd_wg=9kYNL&pd_rd_r=058cd4bf-6bfb-45e4-8159-dc25920cc6d6&pd_rd_i=B01DPW5FWW&psc=1">spirulina</a>
+                    </li>
+                    <li><a title="dulse"
+                            href="https://www.amazon.com/dp/B07Q28642S?ref=ppx_yo2ov_dt_b_product_details&th=1">dulse</a>
+                    </li>
+                    <li>water</li>
+                </ul>
+            </li>
+            <li>Apple(s) peeled</li>
+            <li>4 <a title="L-Lysine" href="https://vimergy.com/products/l-lysine">L-Lysine</a>, 4 <a title="Micro-C"
+                    href="https://vimergy.com/products/micro-c">Micro-C</a>, 1 <a title="Curcumin with Tumneric"
+                    href="https://vimergy.com/products/curcumin">Curcumin with Tumneric</a></li>
+            <li><a title="Zinc" href="https://vimergy.com/products/zinc">Zinc</a> Supplement</li>
+            <li>Banana(s)</li>
+            <li>4 <a title="L-Lysine" href="https://vimergy.com/products/l-lysine">L-Lysine</a>, 4 <a title="Micro-C"
+                    href="https://vimergy.com/products/micro-c">Micro-C</a>, 1 <a title="Curcumin with Tumneric"
+                    href="https://vimergy.com/products/curcumin">Curcumin with Tumneric</a></li>
+            <li><a title="B12" href="https://vimergy.com/products/organic-b12">B12</a> Supplement</li>
+            <li>Orange Drink - 32-40oz
+                <ul>
+                    <li>carrot juice</li>
+                    <li>orange squeezed (optional)</li>
+                </ul>
+            </li>
+            <li><a title="Propolis" href="https://vimergy.com/products/propolispure">Propolis</a> Supplement</li>
+            <li><a title="Spinach Soup" href="https://www.medicalmedium.com/blog/spinach-soup">Spinach Soup</a>
+                <ul>
+                    <li>1 pint grape tomatoes</li>
+                    <li>1 stalk celery</li>
+                    <li>1 garlic clove</li>
+                    <li>1 orange</li>
+                    <li>4 cups baby spinach</li>
+                    <li>2 basil leaves or a few sprigs of cilantro</li>
+                </ul>
+            </li>
+            <li>4 <a title="L-Lysine" href="https://vimergy.com/products/l-lysine">L-Lysine</a>, 4 <a title="Micro-C"
+                    href="https://vimergy.com/products/micro-c">Micro-C</a>, 1 <a title="Curcumin with Tumneric"
+                    href="https://vimergy.com/products/curcumin">Curcumin with Tumneric</a></li>
+            <li>Salad
+                <ul>
+                    <li><a title="kale salad" href="https://www.medicalmedium.com/blog/chopped-kale-salad">kale
+                            salad</a>
+                        <ul>
+                            <li>kale</li>
+                            <li>green onions</li>
+                            <li>cucumber</li>
+                            <li>celery</li>
+                            <li>tomatoes</li>
+                            <li>asparagus</li>
+                            <li>oranges</li>
+                            <li>garlic</li>
+                            <li>serrano pepper (optional)</li>
+                        </ul>
+                    </li>
+                    <li>greens salad</a>
+                        <ul>
+                            <li>spring mix lettuce</li>
+                            <li>green onions</li>
+                            <li>spinach</li>
+                            <li>arugula</li>
+                            <li>broccoli</li>
+                            <li>tomatoes</li>
+                            <li>red onion</li>
+                            <li>baby carrots</li>
+                            <li>bell pepper</li>
+                            <li>garlic</li>
+                            <li>serrano pepper (optional)</li>
+                            <li>lemon squeezed</li>
+                            <li>orange squeezed</li>
+                            <li>strawberries</li>
+                        </ul>
+                    </li>
+                    <li>guacamole salad (on occasion, no more than 2 times per week, in the evenings)</a>
+                        <ul>
+                            <li>avacado</li>
+                            <li>red onion</li>
+                            <li>lime</li>
+                            <li>cilantro</li>
+                            <li>garlic</li>
+                            <li>tomatoes</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a title="Cat's Claw" href="https://vimergy.com/products/organic-cats-claw">Cat's Claw</a> Supplement
+            </li>
+            <li>Watermelon Juice - 32-40oz
+                <ul>
+                    <li>mint leaves (optional)</li>
+                </ul>
+            </li>
+            <li>4 <a title="L-Lysine" href="https://vimergy.com/products/l-lysine">L-Lysine</a>, 4 <a title="Micro-C"
+                    href="https://vimergy.com/products/micro-c">Micro-C</a>, 1 <a title="Curcumin with Tumneric"
+                    href="https://vimergy.com/products/curcumin">Curcumin with Tumneric</a></li>
+            <li><a title="Liver Rescue Smoothie" href="https://www.medicalmedium.com/blog/liver-rescue-smoothie">Liver
+                    Rescue Smoothie</a>
+                <ul>
+                    <li>bananas</li>
+                    <li>dragon fruit</li>
+                    <li><a title="wild blueberries" href="https://www.wymans.com/products/wild-blueberries">wild
+                            blueberries</a></li>
+                    <li>orange squeezed</li>
+                    <li>water</li>
+                </ul>
+            </li>
+        </ul>
+        <footer>
+            <p class="darkText">Developed by Steven Simon</p>
+        </footer>
+    </div>
+    <!--wrapper-->
+    <div id="media-links">
+        <div class="flex">
+            <div id="refresh">&#8635</div>
+            <div id="music">&#9834</div>
+        </div>
+        <div class="flex">
+            <a href="https://accounts.spotify.com/en/login" title="Log into Spotify" target="_blank"><button
+                    id="spotify">Log into Spotify for full song</button></a>
+            <button id="youtube">Try YouTube</button>
+        </div>
+    </div>
+    <iframe id="iframe" src="https://spotify.com" width="100%" height="152" frameBorder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</body>
+<script src="http://www.youtube.com/player_api"></script>
+<script src="script.js"></script>
+
 </html>
