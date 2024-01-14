@@ -7,32 +7,42 @@ var startDay = '16';
 var startYear = '2023';
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-//Raw challenge day total
+// Raw challenge day total
 var numberOfDays = 45;
 
+// Initialize startDate and endDate
 var startDate = new Date(startMonth + " " + startDay + ", " + startYear + " 00:00:00");
-console.log("startDate: " + startDate);
 startDate.setHours(0);
-
-// Calculate the end date based on the start date and number of days
 var endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
 endDate.setHours(0);
+
+// Set title for number of days in challenge
+document.getElementById('totalDaysTitle').innerHTML = numberOfDays;
 
 //Set title for number of days in challenge
 document.getElementById('totalDaysTitle').innerHTML = numberOfDays;
 
-//Get date input
+// Get date input
 var dateAsk = document.getElementById('dateAsk');
 dateAsk.addEventListener("change", function () {
     const dateAskValue = dateAsk.value;
     console.log(dateAskValue);
+
     startDate = new Date(dateAskValue + " 00:00:00");
     startDate.setHours(0);
-    endDate = startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000;
-    endDate = new Date(endDate);
-    endDate.setHours(0);
+
+    // Check if the calculated endDate is a valid date
+    if (!isNaN(endDate)) {
+        endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
+        endDate.setHours(0);
+    }
+
     document.getElementById('startDate').textContent = startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Calculate total days
+    var totalDays = Math.floor((endDate - startDate) / (24 * 60 * 60 * 1000)) + 1;
     document.getElementById('totalDays').textContent = totalDays;
+
     resetInterval(); // Reset the setInterval with the updated dates
 });
 
@@ -54,21 +64,17 @@ var interval;
 function progress() {
     var progressBar = document.getElementById("myBar");
     date = new Date();
-    // Timezones from moment.js
-    // date = convertTZ(date, "America/Chicago");
     now = date.getTime();
     done = now - startDate;
-    daysDone = Math.floor(done / (1000 * 60 * 60 * 24));
-    // console.log(daysDone);
-    var width = ((daysDone + 1) * 100) / numberOfDays;
-    width = Math.round(width);
-    if (width >= numberOfDays) {
-        progressBar.style.width = "100%";
-        progressBar.innerHTML = "100%";
-    } else {
-        progressBar.style.width = width + "%";
-        progressBar.innerHTML = width + "%";
-    }
+
+    // Calculate progress based on the current day and total days
+    var progressPercentage = (done / (numberOfDays * 24 * 60 * 60 * 1000)) * 100;
+
+    // Ensure the progress is within the valid range [0, 100]
+    progressPercentage = Math.min(100, Math.max(0, progressPercentage));
+
+    progressBar.style.width = progressPercentage + "%";
+    progressBar.innerHTML = progressPercentage.toFixed(2) + "%";
 }
 
 function resetProgress() {
