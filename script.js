@@ -28,14 +28,12 @@ dateAsk.addEventListener("change", function () {
     const dateAskValue = dateAsk.value;
     console.log(dateAskValue);
 
-    startDate = new Date(dateAskValue + " 00:00:00");
+    startDate = new Date(dateAskValue + "T00:00:00");
     startDate.setHours(0);
 
-    // Check if the calculated endDate is a valid date
-    if (!isNaN(endDate)) {
-        endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
-        endDate.setHours(0);
-    }
+    // Recalculate the endDate based on the new startDate
+    endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
+    endDate.setHours(0);
 
     document.getElementById('startDate').textContent = startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
