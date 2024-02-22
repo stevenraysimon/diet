@@ -122,8 +122,14 @@ function startCountdown() {
     var totalDays = Math.floor(total / (1000 * 60 * 60 * 24));
 
     // Display the results
-    document.getElementById("countdown").innerHTML =
-        days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds to go ";
+    if (daysDone >= numberOfDays) {
+        document.getElementById("countdown").innerHTML = "Congratulations! You went " + numberOfDays + " days raw!";
+        document.getElementById("endText").innerHTML = "ended";
+    } else {
+        document.getElementById("countdown").innerHTML =
+            days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds to go ";
+        document.getElementById("endText").innerHTML = "will end";
+    }
 
     document.getElementById("total").innerHTML =
         "You have gone a total of " +
@@ -135,11 +141,6 @@ function startCountdown() {
         " minutes " +
         secondsDone +
         " seconds";
-
-    // If the count down is finished, write some text
-    if (distance < 0) {
-        document.getElementById("myBar").innerHTML = "EXPIRED";
-    }
 
     document.getElementById("today").innerHTML = getMonth + " " + today + ", " + year;
     document.getElementById("dayOfWeek").innerHTML = dayOfWeek;
