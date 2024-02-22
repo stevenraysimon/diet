@@ -10,6 +10,9 @@ const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday
 // Raw challenge day total
 var numberOfDays = 45;
 
+//confetti
+var confettiBlast = false;
+
 // Initialize startDate and endDate
 var startDate = new Date(startMonth + " " + startDay + ", " + startYear + " 00:00:00");
 startDate.setHours(0);
@@ -40,6 +43,9 @@ dateAsk.addEventListener("change", function () {
     // Calculate total days
     var totalDays = Math.floor((endDate - startDate) / (24 * 60 * 60 * 1000)) + 1;
     document.getElementById('totalDays').textContent = totalDays;
+
+    //Reset confetti
+    confettiBlast = false;
 
     resetInterval(); // Reset the setInterval with the updated dates
 });
@@ -125,6 +131,14 @@ function startCountdown() {
     if (daysDone >= numberOfDays) {
         document.getElementById("countdown").innerHTML = "Congratulations! You went " + numberOfDays + " days raw!";
         document.getElementById("endText").innerHTML = "ended";
+        if (confettiBlast == false) {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+            });
+            confettiBlast = true;
+        }
     } else {
         document.getElementById("countdown").innerHTML =
             days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds to go ";
