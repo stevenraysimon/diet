@@ -359,3 +359,7 @@ footer {
     height: 0;
     display: none;
 }
+
+.description {
+    margin-bottom: 20px;
+}
