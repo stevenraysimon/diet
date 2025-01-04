@@ -8,11 +8,11 @@ var startYear = '2023';
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 var getTotalDaysSelector = document.getElementById('totalDaysSelector');
-var numberOfDays = getTotalDaysSelector.value;
+var numberOfDays = parseInt(getTotalDaysSelector.value);
 
 // Add event listener to update the numberOfDays and recalculate dates when totalDaysSelector is changed
 getTotalDaysSelector.addEventListener('change', function() {
-    numberOfDays = getTotalDaysSelector.value;
+    numberOfDays = parseInt(getTotalDaysSelector.value);
 
     // Recalculate endDate based on the new numberOfDays
     endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
