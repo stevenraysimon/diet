@@ -7,8 +7,27 @@ var startDay = '16';
 var startYear = '2023';
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-// Raw challenge day total
-var numberOfDays = 45;
+var getTotalDaysSelector = document.getElementById('totalDaysSelector');
+var numberOfDays = getTotalDaysSelector.value;
+
+// Add event listener to update the numberOfDays and recalculate dates when totalDaysSelector is changed
+getTotalDaysSelector.addEventListener('change', function() {
+    numberOfDays = getTotalDaysSelector.value;
+
+    // Recalculate endDate based on the new numberOfDays
+    endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
+    endDate.setHours(0);
+
+    // Update the displayed number of total days
+    document.getElementById('totalDays').textContent = numberOfDays;
+
+    //Reset confetti
+    confettiBlast = false;
+
+    // Reset progress bar and start countdown
+    resetInterval();
+    resetProgress();
+});
 
 //confetti
 var confettiBlast = false;
@@ -18,12 +37,6 @@ var startDate = new Date(startMonth + " " + startDay + ", " + startYear + " 00:0
 startDate.setHours(0);
 var endDate = new Date(startDate.getTime() + numberOfDays * 24 * 60 * 60 * 1000);
 endDate.setHours(0);
-
-// Set title for number of days in challenge
-document.getElementById('totalDaysTitle').innerHTML = numberOfDays;
-
-//Set title for number of days in challenge
-document.getElementById('totalDaysTitle').innerHTML = numberOfDays;
 
 // Get date input
 var dateAsk = document.getElementById('dateAsk');
